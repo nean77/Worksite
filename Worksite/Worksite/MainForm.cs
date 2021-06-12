@@ -31,7 +31,35 @@ namespace Worksite
         {
             InitializeComponent();
             SetColor();
+            initTextSettings();
         }
 
+        private void findServiceHomeBtn_Click(object sender, EventArgs e)
+        {
+            
+        }
+        private void initTextSettings()
+        {
+            // 
+            // openServiceCountTxt
+            // 
+            this.openServiceCountTxt.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.openServiceCountTxt.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.openServiceCountTxt.Location = new System.Drawing.Point(15, 282);
+            this.openServiceCountTxt.Size = new System.Drawing.Size(57, 24);
+            this.openServiceCountTxt.TabIndex = 0;
+            this.openServiceCountTxt.Text = "0000";
+            this.openServiceCountTxt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // expiredServiceCountTxt
+            // 
+            this.expiredServiceCountTxt.Font = new System.Drawing.Font("Roboto Medium", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.expiredServiceCountTxt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.expiredServiceCountTxt.Location = new System.Drawing.Point(15, 354);
+            this.expiredServiceCountTxt.Size = new System.Drawing.Size(57, 24);
+            this.expiredServiceCountTxt.TabIndex = 0;
+            this.expiredServiceCountTxt.Text = "0000";
+            this.expiredServiceCountTxt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+        }
     }
 }

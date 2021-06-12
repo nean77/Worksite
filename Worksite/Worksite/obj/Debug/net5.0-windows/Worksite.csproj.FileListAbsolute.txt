@@ -6,7 +6,6 @@ E:\GitHub\Worksite\Worksite\Worksite\bin\Debug\net5.0-windows\Worksite.dll
 E:\GitHub\Worksite\Worksite\Worksite\bin\Debug\net5.0-windows\ref\Worksite.dll
 E:\GitHub\Worksite\Worksite\Worksite\bin\Debug\net5.0-windows\Worksite.pdb
 E:\GitHub\Worksite\Worksite\Worksite\bin\Debug\net5.0-windows\MaterialSkin.dll
-E:\GitHub\Worksite\Worksite\Worksite\obj\Debug\net5.0-windows\Worksite.csprojAssemblyReference.cache
 E:\GitHub\Worksite\Worksite\Worksite\obj\Debug\net5.0-windows\Worksite.Forms.LoginForm.resources
 E:\GitHub\Worksite\Worksite\Worksite\obj\Debug\net5.0-windows\Worksite.MainForm.resources
 E:\GitHub\Worksite\Worksite\Worksite\obj\Debug\net5.0-windows\Worksite.Properties.Resources.resources
