@@ -33,6 +33,8 @@
             this.menuIcons = new System.Windows.Forms.ImageList(this.components);
             this.TabControl = new MaterialSkin.Controls.MaterialTabControl();
             this.homeTab = new System.Windows.Forms.TabPage();
+            this.expiredServiceCountTxt = new System.Windows.Forms.Label();
+            this.openServiceCountTxt = new System.Windows.Forms.Label();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
             this.addCustomerHomeBtn = new MaterialSkin.Controls.MaterialButton();
             this.findServiceHomeBtn = new MaterialSkin.Controls.MaterialButton();
@@ -47,8 +49,6 @@
             this.devicesTab = new System.Windows.Forms.TabPage();
             this.statsTab = new System.Windows.Forms.TabPage();
             this.admtoolsTab = new System.Windows.Forms.TabPage();
-            this.openServiceCountTxt = new System.Windows.Forms.Label();
-            this.expiredServiceCountTxt = new System.Windows.Forms.Label();
             this.TabControl.SuspendLayout();
             this.homeTab.SuspendLayout();
             this.SuspendLayout();
@@ -114,6 +114,28 @@
             this.homeTab.TabIndex = 0;
             this.homeTab.Text = "Home";
             // 
+            // expiredServiceCountTxt
+            // 
+            this.expiredServiceCountTxt.Font = new System.Drawing.Font("Roboto", 14.25F);
+            this.expiredServiceCountTxt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.expiredServiceCountTxt.Location = new System.Drawing.Point(15, 354);
+            this.expiredServiceCountTxt.Name = "expiredServiceCountTxt";
+            this.expiredServiceCountTxt.Size = new System.Drawing.Size(57, 24);
+            this.expiredServiceCountTxt.TabIndex = 3;
+            this.expiredServiceCountTxt.Text = "0000";
+            this.expiredServiceCountTxt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // openServiceCountTxt
+            // 
+            this.openServiceCountTxt.Font = new System.Drawing.Font("Roboto", 14.25F);
+            this.openServiceCountTxt.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.openServiceCountTxt.Location = new System.Drawing.Point(15, 282);
+            this.openServiceCountTxt.Name = "openServiceCountTxt";
+            this.openServiceCountTxt.Size = new System.Drawing.Size(57, 24);
+            this.openServiceCountTxt.TabIndex = 3;
+            this.openServiceCountTxt.Text = "0000";
+            this.openServiceCountTxt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // materialDivider1
             // 
             this.materialDivider1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -142,7 +164,7 @@
             this.addCustomerHomeBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.addCustomerHomeBtn.Name = "addCustomerHomeBtn";
             this.addCustomerHomeBtn.Size = new System.Drawing.Size(160, 36);
-            this.addCustomerHomeBtn.TabIndex = 1;
+            this.addCustomerHomeBtn.TabIndex = 2;
             this.addCustomerHomeBtn.Text = "Dodaj klienta";
             this.addCustomerHomeBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.addCustomerHomeBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -162,7 +184,7 @@
             this.findServiceHomeBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.findServiceHomeBtn.Name = "findServiceHomeBtn";
             this.findServiceHomeBtn.Size = new System.Drawing.Size(338, 36);
-            this.findServiceHomeBtn.TabIndex = 2;
+            this.findServiceHomeBtn.TabIndex = 3;
             this.findServiceHomeBtn.Text = "Wyszukaj naprawę";
             this.findServiceHomeBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.findServiceHomeBtn.UseAccentColor = false;
@@ -310,28 +332,6 @@
             this.admtoolsTab.Text = "Administracja";
             this.admtoolsTab.UseVisualStyleBackColor = true;
             // 
-            // expiredServiceCountTxt
-            // 
-            this.expiredServiceCountTxt.Font = new System.Drawing.Font("Roboto", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.expiredServiceCountTxt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.expiredServiceCountTxt.Location = new System.Drawing.Point(15, 354);
-            this.expiredServiceCountTxt.Name = "expiredServiceCountTxt";
-            this.expiredServiceCountTxt.Size = new System.Drawing.Size(57, 24);
-            this.expiredServiceCountTxt.TabIndex = 3;
-            this.expiredServiceCountTxt.Text = "0000";
-            this.expiredServiceCountTxt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // openServiceCountTxt
-            // 
-            this.openServiceCountTxt.Font = new System.Drawing.Font("Roboto", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.openServiceCountTxt.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.openServiceCountTxt.Location = new System.Drawing.Point(15, 282);
-            this.openServiceCountTxt.Name = "openServiceCountTxt";
-            this.openServiceCountTxt.Size = new System.Drawing.Size(57, 24);
-            this.openServiceCountTxt.TabIndex = 3;
-            this.openServiceCountTxt.Text = "0000";
-            this.openServiceCountTxt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -348,6 +348,7 @@
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(4);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Tag = "asdasd";
             this.Text = "Worksite";
             this.TabControl.ResumeLayout(false);
             this.homeTab.ResumeLayout(false);

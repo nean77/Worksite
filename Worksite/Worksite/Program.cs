@@ -9,6 +9,7 @@ namespace Worksite
 {
     static class Program
     {
+        public static User currentUser;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

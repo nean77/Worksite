@@ -73,6 +73,9 @@ namespace Worksite.Forms
             this.passwordTxt.TabIndex = 1;
             this.passwordTxt.Text = "nean";
             this.passwordTxt.TrailingIcon = null;
+            this.passwordTxt.MouseClick += new System.Windows.Forms.MouseEventHandler(this.passwordTxt_MouseClick);
+            this.passwordTxt.Enter += new System.EventHandler(this.passwordTxt_Enter);
+            this.passwordTxt.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.passwordTxt_MouseDoubleClick);
             // 
             // loginBtn
             // 
@@ -81,7 +84,7 @@ namespace Worksite.Forms
             this.loginBtn.Depth = 0;
             this.loginBtn.HighEmphasis = true;
             this.loginBtn.Icon = null;
-            this.loginBtn.Location = new System.Drawing.Point(187, 294);
+            this.loginBtn.Location = new System.Drawing.Point(176, 294);
             this.loginBtn.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.loginBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.loginBtn.Name = "loginBtn";
@@ -111,6 +114,7 @@ namespace Worksite.Forms
             this.cancelBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
             this.cancelBtn.UseAccentColor = false;
             this.cancelBtn.UseVisualStyleBackColor = true;
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
             // headerLabel
             // 

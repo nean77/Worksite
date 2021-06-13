@@ -1,0 +1,1032 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WorksiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="255" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="64" />
+          <Property Name="Description" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Devices">
+          <Key>
+            <PropertyRef Name="DeviceId" />
+          </Key>
+          <Property Name="DeviceId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="InventNo" Type="int" />
+          <Property Name="CustomerId" Type="bigint" Nullable="false" />
+          <Property Name="DeviceTypeId" Type="bigint" Nullable="false" />
+          <Property Name="SerialNumber" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="DeviceTypes">
+          <Key>
+            <PropertyRef Name="DeviceTypeId" />
+          </Key>
+          <Property Name="DeviceTypeId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceOrders">
+          <Key>
+            <PropertyRef Name="ServiceOrderId" />
+          </Key>
+          <Property Name="ServiceOrderId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="bigint" Nullable="false" />
+          <Property Name="DeviceId" Type="bigint" Nullable="false" />
+          <Property Name="OpenDate" Type="date" Nullable="false" />
+          <Property Name="CloseDate" Type="date" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="UserId" Type="bigint" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceOrders_ServiceStatuses">
+          <Key>
+            <PropertyRef Name="ServiceOrders_ServiceStatusesId" />
+          </Key>
+          <Property Name="ServiceOrders_ServiceStatusesId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceOrderId" Type="bigint" Nullable="false" />
+          <Property Name="ServiceStatusId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceOrders_ServiceTypes">
+          <Key>
+            <PropertyRef Name="ServiceOrders_ServiceTypesId" />
+          </Key>
+          <Property Name="ServiceOrders_ServiceTypesId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceOrderId" Type="bigint" Nullable="false" />
+          <Property Name="ServiceTypeId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceStatuses">
+          <Key>
+            <PropertyRef Name="ServiceStatusId" />
+          </Key>
+          <Property Name="ServiceStatusId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceTypes">
+          <Key>
+            <PropertyRef Name="ServiceTypeId" />
+          </Key>
+          <Property Name="ServiceTypeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="64" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Administrator" Type="bit" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="LoginTryCount" Type="int" />
+          <Property Name="LastLoginTryDateTime" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Worksite.dbo.AllDevices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AllDevices">
+          <Key>
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="DeviceType" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+          </Key>
+          <Property Name="DeviceId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="InventNo" Type="int" />
+          <Property Name="DeviceType" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Worksite.dbo.AllExpiredServices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AllExpiredServices">
+          <Key>
+            <PropertyRef Name="ServiceOrderId" />
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="OpenDate" />
+            <PropertyRef Name="ServiceStatus" />
+            <PropertyRef Name="Employee" />
+          </Key>
+          <Property Name="ServiceOrderId" Type="bigint" Nullable="false" />
+          <Property Name="DeviceId" Type="bigint" Nullable="false" />
+          <Property Name="DeviceName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="OpenDate" Type="date" Nullable="false" />
+          <Property Name="ServiceStatus" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Employee" Type="varchar" MaxLength="511" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Worksite.dbo.AllOpenServices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AllOpenServices">
+          <Key>
+            <PropertyRef Name="ServiceOrderId" />
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="OpenDate" />
+            <PropertyRef Name="ServiceStatus" />
+            <PropertyRef Name="Employee" />
+          </Key>
+          <Property Name="ServiceOrderId" Type="bigint" Nullable="false" />
+          <Property Name="DeviceId" Type="bigint" Nullable="false" />
+          <Property Name="DeviceName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="OpenDate" Type="date" Nullable="false" />
+          <Property Name="ServiceStatus" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Employee" Type="varchar" MaxLength="511" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Worksite.dbo.AllServices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AllServices">
+          <Key>
+            <PropertyRef Name="ServiceOrderId" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="OpenDate" />
+            <PropertyRef Name="ServiceStatusName" />
+            <PropertyRef Name="Employee" />
+          </Key>
+          <Property Name="ServiceOrderId" Type="bigint" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DeviceId" Type="bigint" Nullable="false" />
+          <Property Name="DeviceName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="OpenDate" Type="date" Nullable="false" />
+          <Property Name="CloseDate" Type="date" />
+          <Property Name="ServiceStatusName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ServiceValue" Type="money" />
+          <Property Name="Employee" Type="varchar" MaxLength="511" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AllWrongStatusServices">
+          <Key>
+            <PropertyRef Name="ServiceOrderId" />
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="OpenDate" />
+            <PropertyRef Name="ServiceStatus" />
+            <PropertyRef Name="Employee" />
+          </Key>
+          <Property Name="ServiceOrderId" Type="bigint" Nullable="false" />
+          <Property Name="DeviceId" Type="bigint" Nullable="false" />
+          <Property Name="DeviceName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="OpenDate" Type="date" Nullable="false" />
+          <Property Name="CloseDate" Type="date" />
+          <Property Name="ServiceStatus" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Employee" Type="varchar" MaxLength="511" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Devices_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Devices_DeviceTypes">
+          <End Role="DeviceTypes" Type="Self.DeviceTypes" Multiplicity="1" />
+          <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceTypes">
+              <PropertyRef Name="DeviceTypeId" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="DeviceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="ServiceOrders" Type="Self.ServiceOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="ServiceOrders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_Devices">
+          <End Role="Devices" Type="Self.Devices" Multiplicity="1" />
+          <End Role="ServiceOrders" Type="Self.ServiceOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Devices">
+              <PropertyRef Name="DeviceId" />
+            </Principal>
+            <Dependent Role="ServiceOrders">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_ServiceStatuses_ServiceOrders">
+          <End Role="ServiceOrders" Type="Self.ServiceOrders" Multiplicity="1" />
+          <End Role="ServiceOrders_ServiceStatuses" Type="Self.ServiceOrders_ServiceStatuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceOrders">
+              <PropertyRef Name="ServiceOrderId" />
+            </Principal>
+            <Dependent Role="ServiceOrders_ServiceStatuses">
+              <PropertyRef Name="ServiceOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_ServiceStatuses_ServiceStatuses">
+          <End Role="ServiceStatuses" Type="Self.ServiceStatuses" Multiplicity="1" />
+          <End Role="ServiceOrders_ServiceStatuses" Type="Self.ServiceOrders_ServiceStatuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceStatuses">
+              <PropertyRef Name="ServiceStatusId" />
+            </Principal>
+            <Dependent Role="ServiceOrders_ServiceStatuses">
+              <PropertyRef Name="ServiceStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_ServiceStatuses_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="ServiceOrders_ServiceStatuses" Type="Self.ServiceOrders_ServiceStatuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ServiceOrders_ServiceStatuses">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_ServiceTypes_ServiceOrders">
+          <End Role="ServiceOrders" Type="Self.ServiceOrders" Multiplicity="1" />
+          <End Role="ServiceOrders_ServiceTypes" Type="Self.ServiceOrders_ServiceTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceOrders">
+              <PropertyRef Name="ServiceOrderId" />
+            </Principal>
+            <Dependent Role="ServiceOrders_ServiceTypes">
+              <PropertyRef Name="ServiceOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_ServiceTypes_ServiceTypes">
+          <End Role="ServiceTypes" Type="Self.ServiceTypes" Multiplicity="1" />
+          <End Role="ServiceOrders_ServiceTypes" Type="Self.ServiceOrders_ServiceTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceTypes">
+              <PropertyRef Name="ServiceTypeId" />
+            </Principal>
+            <Dependent Role="ServiceOrders_ServiceTypes">
+              <PropertyRef Name="ServiceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="ServiceOrders" Type="Self.ServiceOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ServiceOrders">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WorksiteModelStoreContainer">
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Devices" EntityType="Self.Devices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceTypes" EntityType="Self.DeviceTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceOrders" EntityType="Self.ServiceOrders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceOrders_ServiceStatuses" EntityType="Self.ServiceOrders_ServiceStatuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceOrders_ServiceTypes" EntityType="Self.ServiceOrders_ServiceTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceStatuses" EntityType="Self.ServiceStatuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceTypes" EntityType="Self.ServiceTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AllDevices" EntityType="Self.AllDevices" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AllDevices].[DeviceId] AS [DeviceId], 
+    [AllDevices].[Name] AS [Name], 
+    [AllDevices].[InventNo] AS [InventNo], 
+    [AllDevices].[DeviceType] AS [DeviceType], 
+    [AllDevices].[FirstName] AS [FirstName], 
+    [AllDevices].[LastName] AS [LastName]
+    FROM [dbo].[AllDevices] AS [AllDevices]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AllExpiredServices" EntityType="Self.AllExpiredServices" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AllExpiredServices].[ServiceOrderId] AS [ServiceOrderId], 
+    [AllExpiredServices].[DeviceId] AS [DeviceId], 
+    [AllExpiredServices].[DeviceName] AS [DeviceName], 
+    [AllExpiredServices].[OpenDate] AS [OpenDate], 
+    [AllExpiredServices].[ServiceStatus] AS [ServiceStatus], 
+    [AllExpiredServices].[Employee] AS [Employee]
+    FROM [dbo].[AllExpiredServices] AS [AllExpiredServices]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AllOpenServices" EntityType="Self.AllOpenServices" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AllOpenServices].[ServiceOrderId] AS [ServiceOrderId], 
+    [AllOpenServices].[DeviceId] AS [DeviceId], 
+    [AllOpenServices].[DeviceName] AS [DeviceName], 
+    [AllOpenServices].[OpenDate] AS [OpenDate], 
+    [AllOpenServices].[ServiceStatus] AS [ServiceStatus], 
+    [AllOpenServices].[Employee] AS [Employee]
+    FROM [dbo].[AllOpenServices] AS [AllOpenServices]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AllServices" EntityType="Self.AllServices" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AllServices].[ServiceOrderId] AS [ServiceOrderId], 
+    [AllServices].[FirstName] AS [FirstName], 
+    [AllServices].[LastName] AS [LastName], 
+    [AllServices].[DeviceId] AS [DeviceId], 
+    [AllServices].[DeviceName] AS [DeviceName], 
+    [AllServices].[OpenDate] AS [OpenDate], 
+    [AllServices].[CloseDate] AS [CloseDate], 
+    [AllServices].[ServiceStatusName] AS [ServiceStatusName], 
+    [AllServices].[ServiceValue] AS [ServiceValue], 
+    [AllServices].[Employee] AS [Employee]
+    FROM [dbo].[AllServices] AS [AllServices]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AllWrongStatusServices" EntityType="Self.AllWrongStatusServices" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AllWrongStatusServices].[ServiceOrderId] AS [ServiceOrderId], 
+    [AllWrongStatusServices].[DeviceId] AS [DeviceId], 
+    [AllWrongStatusServices].[DeviceName] AS [DeviceName], 
+    [AllWrongStatusServices].[OpenDate] AS [OpenDate], 
+    [AllWrongStatusServices].[CloseDate] AS [CloseDate], 
+    [AllWrongStatusServices].[ServiceStatus] AS [ServiceStatus], 
+    [AllWrongStatusServices].[Employee] AS [Employee]
+    FROM [dbo].[AllWrongStatusServices] AS [AllWrongStatusServices]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Devices_Customers" Association="Self.FK_Devices_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Devices_DeviceTypes" Association="Self.FK_Devices_DeviceTypes">
+            <End Role="DeviceTypes" EntitySet="DeviceTypes" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_Customers" Association="Self.FK_ServiceOrders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="ServiceOrders" EntitySet="ServiceOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_Devices" Association="Self.FK_ServiceOrders_Devices">
+            <End Role="Devices" EntitySet="Devices" />
+            <End Role="ServiceOrders" EntitySet="ServiceOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_ServiceStatuses_ServiceOrders" Association="Self.FK_ServiceOrders_ServiceStatuses_ServiceOrders">
+            <End Role="ServiceOrders" EntitySet="ServiceOrders" />
+            <End Role="ServiceOrders_ServiceStatuses" EntitySet="ServiceOrders_ServiceStatuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_ServiceStatuses_ServiceStatuses" Association="Self.FK_ServiceOrders_ServiceStatuses_ServiceStatuses">
+            <End Role="ServiceStatuses" EntitySet="ServiceStatuses" />
+            <End Role="ServiceOrders_ServiceStatuses" EntitySet="ServiceOrders_ServiceStatuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_ServiceStatuses_Users" Association="Self.FK_ServiceOrders_ServiceStatuses_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ServiceOrders_ServiceStatuses" EntitySet="ServiceOrders_ServiceStatuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_ServiceTypes_ServiceOrders" Association="Self.FK_ServiceOrders_ServiceTypes_ServiceOrders">
+            <End Role="ServiceOrders" EntitySet="ServiceOrders" />
+            <End Role="ServiceOrders_ServiceTypes" EntitySet="ServiceOrders_ServiceTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_ServiceTypes_ServiceTypes" Association="Self.FK_ServiceOrders_ServiceTypes_ServiceTypes">
+            <End Role="ServiceTypes" EntitySet="ServiceTypes" />
+            <End Role="ServiceOrders_ServiceTypes" EntitySet="ServiceOrders_ServiceTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_Users" Association="Self.FK_ServiceOrders_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ServiceOrders" EntitySet="ServiceOrders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WorksiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Devices" Relationship="Self.FK_Devices_Customers" FromRole="Customers" ToRole="Devices" />
+          <NavigationProperty Name="ServiceOrders" Relationship="Self.FK_ServiceOrders_Customers" FromRole="Customers" ToRole="ServiceOrders" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="DeviceId" />
+          </Key>
+          <Property Name="DeviceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="InventNo" Type="Int32" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="DeviceTypeId" Type="Int64" Nullable="false" />
+          <Property Name="SerialNumber" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Devices_Customers" FromRole="Devices" ToRole="Customers" />
+          <NavigationProperty Name="DeviceType" Relationship="Self.FK_Devices_DeviceTypes" FromRole="Devices" ToRole="DeviceTypes" />
+          <NavigationProperty Name="ServiceOrders" Relationship="Self.FK_ServiceOrders_Devices" FromRole="Devices" ToRole="ServiceOrders" />
+        </EntityType>
+        <EntityType Name="DeviceType">
+          <Key>
+            <PropertyRef Name="DeviceTypeId" />
+          </Key>
+          <Property Name="DeviceTypeId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Devices" Relationship="Self.FK_Devices_DeviceTypes" FromRole="DeviceTypes" ToRole="Devices" />
+        </EntityType>
+        <EntityType Name="ServiceOrder">
+          <Key>
+            <PropertyRef Name="ServiceOrderId" />
+          </Key>
+          <Property Name="ServiceOrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="DeviceId" Type="Int64" Nullable="false" />
+          <Property Name="OpenDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CloseDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int64" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_ServiceOrders_Customers" FromRole="ServiceOrders" ToRole="Customers" />
+          <NavigationProperty Name="Device" Relationship="Self.FK_ServiceOrders_Devices" FromRole="ServiceOrders" ToRole="Devices" />
+          <NavigationProperty Name="ServiceOrders_ServiceStatuses" Relationship="Self.FK_ServiceOrders_ServiceStatuses_ServiceOrders" FromRole="ServiceOrders" ToRole="ServiceOrders_ServiceStatuses" />
+          <NavigationProperty Name="ServiceOrders_ServiceTypes" Relationship="Self.FK_ServiceOrders_ServiceTypes_ServiceOrders" FromRole="ServiceOrders" ToRole="ServiceOrders_ServiceTypes" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ServiceOrders_Users" FromRole="ServiceOrders" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="ServiceOrders_ServiceStatuses">
+          <Key>
+            <PropertyRef Name="ServiceOrders_ServiceStatusesId" />
+          </Key>
+          <Property Name="ServiceOrders_ServiceStatusesId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceOrderId" Type="Int64" Nullable="false" />
+          <Property Name="ServiceStatusId" Type="Int64" Nullable="false" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ServiceOrder" Relationship="Self.FK_ServiceOrders_ServiceStatuses_ServiceOrders" FromRole="ServiceOrders_ServiceStatuses" ToRole="ServiceOrders" />
+          <NavigationProperty Name="ServiceStatus" Relationship="Self.FK_ServiceOrders_ServiceStatuses_ServiceStatuses" FromRole="ServiceOrders_ServiceStatuses" ToRole="ServiceStatuses" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ServiceOrders_ServiceStatuses_Users" FromRole="ServiceOrders_ServiceStatuses" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="ServiceOrders_ServiceTypes">
+          <Key>
+            <PropertyRef Name="ServiceOrders_ServiceTypesId" />
+          </Key>
+          <Property Name="ServiceOrders_ServiceTypesId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceOrderId" Type="Int64" Nullable="false" />
+          <Property Name="ServiceTypeId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ServiceOrder" Relationship="Self.FK_ServiceOrders_ServiceTypes_ServiceOrders" FromRole="ServiceOrders_ServiceTypes" ToRole="ServiceOrders" />
+          <NavigationProperty Name="ServiceType" Relationship="Self.FK_ServiceOrders_ServiceTypes_ServiceTypes" FromRole="ServiceOrders_ServiceTypes" ToRole="ServiceTypes" />
+        </EntityType>
+        <EntityType Name="ServiceStatus">
+          <Key>
+            <PropertyRef Name="ServiceStatusId" />
+          </Key>
+          <Property Name="ServiceStatusId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ServiceOrders_ServiceStatuses" Relationship="Self.FK_ServiceOrders_ServiceStatuses_ServiceStatuses" FromRole="ServiceStatuses" ToRole="ServiceOrders_ServiceStatuses" />
+        </EntityType>
+        <EntityType Name="ServiceType">
+          <Key>
+            <PropertyRef Name="ServiceTypeId" />
+          </Key>
+          <Property Name="ServiceTypeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ServiceOrders_ServiceTypes" Relationship="Self.FK_ServiceOrders_ServiceTypes_ServiceTypes" FromRole="ServiceTypes" ToRole="ServiceOrders_ServiceTypes" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Administrator" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LoginTryCount" Type="Int32" />
+          <Property Name="LastLoginTryDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ServiceOrders" Relationship="Self.FK_ServiceOrders_Users" FromRole="Users" ToRole="ServiceOrders" />
+          <NavigationProperty Name="ServiceOrders_ServiceStatuses" Relationship="Self.FK_ServiceOrders_ServiceStatuses_Users" FromRole="Users" ToRole="ServiceOrders_ServiceStatuses" />
+        </EntityType>
+        <EntityType Name="AllDevice">
+          <Key>
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="DeviceType" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+          </Key>
+          <Property Name="DeviceId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="InventNo" Type="Int32" />
+          <Property Name="DeviceType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AllExpiredService">
+          <Key>
+            <PropertyRef Name="ServiceOrderId" />
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="OpenDate" />
+            <PropertyRef Name="ServiceStatus" />
+            <PropertyRef Name="Employee" />
+          </Key>
+          <Property Name="ServiceOrderId" Type="Int64" Nullable="false" />
+          <Property Name="DeviceId" Type="Int64" Nullable="false" />
+          <Property Name="DeviceName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OpenDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ServiceStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Employee" Type="String" MaxLength="511" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AllOpenService">
+          <Key>
+            <PropertyRef Name="ServiceOrderId" />
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="OpenDate" />
+            <PropertyRef Name="ServiceStatus" />
+            <PropertyRef Name="Employee" />
+          </Key>
+          <Property Name="ServiceOrderId" Type="Int64" Nullable="false" />
+          <Property Name="DeviceId" Type="Int64" Nullable="false" />
+          <Property Name="DeviceName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OpenDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ServiceStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Employee" Type="String" MaxLength="511" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AllService">
+          <Key>
+            <PropertyRef Name="ServiceOrderId" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="OpenDate" />
+            <PropertyRef Name="ServiceStatusName" />
+            <PropertyRef Name="Employee" />
+          </Key>
+          <Property Name="ServiceOrderId" Type="Int64" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeviceId" Type="Int64" Nullable="false" />
+          <Property Name="DeviceName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OpenDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CloseDate" Type="DateTime" Precision="0" />
+          <Property Name="ServiceStatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ServiceValue" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Employee" Type="String" MaxLength="511" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AllWrongStatusService">
+          <Key>
+            <PropertyRef Name="ServiceOrderId" />
+            <PropertyRef Name="DeviceId" />
+            <PropertyRef Name="DeviceName" />
+            <PropertyRef Name="OpenDate" />
+            <PropertyRef Name="ServiceStatus" />
+            <PropertyRef Name="Employee" />
+          </Key>
+          <Property Name="ServiceOrderId" Type="Int64" Nullable="false" />
+          <Property Name="DeviceId" Type="Int64" Nullable="false" />
+          <Property Name="DeviceName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OpenDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CloseDate" Type="DateTime" Precision="0" />
+          <Property Name="ServiceStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Employee" Type="String" MaxLength="511" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Devices_Customers">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Devices" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_Customers">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="ServiceOrders" Type="Self.ServiceOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="ServiceOrders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Devices_DeviceTypes">
+          <End Role="DeviceTypes" Type="Self.DeviceType" Multiplicity="1" />
+          <End Role="Devices" Type="Self.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceTypes">
+              <PropertyRef Name="DeviceTypeId" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="DeviceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_Devices">
+          <End Role="Devices" Type="Self.Device" Multiplicity="1" />
+          <End Role="ServiceOrders" Type="Self.ServiceOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Devices">
+              <PropertyRef Name="DeviceId" />
+            </Principal>
+            <Dependent Role="ServiceOrders">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_ServiceStatuses_ServiceOrders">
+          <End Role="ServiceOrders" Type="Self.ServiceOrder" Multiplicity="1" />
+          <End Role="ServiceOrders_ServiceStatuses" Type="Self.ServiceOrders_ServiceStatuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceOrders">
+              <PropertyRef Name="ServiceOrderId" />
+            </Principal>
+            <Dependent Role="ServiceOrders_ServiceStatuses">
+              <PropertyRef Name="ServiceOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_ServiceTypes_ServiceOrders">
+          <End Role="ServiceOrders" Type="Self.ServiceOrder" Multiplicity="1" />
+          <End Role="ServiceOrders_ServiceTypes" Type="Self.ServiceOrders_ServiceTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceOrders">
+              <PropertyRef Name="ServiceOrderId" />
+            </Principal>
+            <Dependent Role="ServiceOrders_ServiceTypes">
+              <PropertyRef Name="ServiceOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="ServiceOrders" Type="Self.ServiceOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ServiceOrders">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_ServiceStatuses_ServiceStatuses">
+          <End Role="ServiceStatuses" Type="Self.ServiceStatus" Multiplicity="1" />
+          <End Role="ServiceOrders_ServiceStatuses" Type="Self.ServiceOrders_ServiceStatuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceStatuses">
+              <PropertyRef Name="ServiceStatusId" />
+            </Principal>
+            <Dependent Role="ServiceOrders_ServiceStatuses">
+              <PropertyRef Name="ServiceStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_ServiceStatuses_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="ServiceOrders_ServiceStatuses" Type="Self.ServiceOrders_ServiceStatuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ServiceOrders_ServiceStatuses">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_ServiceTypes_ServiceTypes">
+          <End Role="ServiceTypes" Type="Self.ServiceType" Multiplicity="1" />
+          <End Role="ServiceOrders_ServiceTypes" Type="Self.ServiceOrders_ServiceTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceTypes">
+              <PropertyRef Name="ServiceTypeId" />
+            </Principal>
+            <Dependent Role="ServiceOrders_ServiceTypes">
+              <PropertyRef Name="ServiceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WorksiteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Devices" EntityType="Self.Device" />
+          <EntitySet Name="DeviceTypes" EntityType="Self.DeviceType" />
+          <EntitySet Name="ServiceOrders" EntityType="Self.ServiceOrder" />
+          <EntitySet Name="ServiceOrders_ServiceStatuses" EntityType="Self.ServiceOrders_ServiceStatuses" />
+          <EntitySet Name="ServiceOrders_ServiceTypes" EntityType="Self.ServiceOrders_ServiceTypes" />
+          <EntitySet Name="ServiceStatuses" EntityType="Self.ServiceStatus" />
+          <EntitySet Name="ServiceTypes" EntityType="Self.ServiceType" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="AllDevices" EntityType="Self.AllDevice" />
+          <EntitySet Name="AllExpiredServices" EntityType="Self.AllExpiredService" />
+          <EntitySet Name="AllOpenServices" EntityType="Self.AllOpenService" />
+          <EntitySet Name="AllServices" EntityType="Self.AllService" />
+          <EntitySet Name="AllWrongStatusServices" EntityType="Self.AllWrongStatusService" />
+          <AssociationSet Name="FK_Devices_Customers" Association="Self.FK_Devices_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_Customers" Association="Self.FK_ServiceOrders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="ServiceOrders" EntitySet="ServiceOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Devices_DeviceTypes" Association="Self.FK_Devices_DeviceTypes">
+            <End Role="DeviceTypes" EntitySet="DeviceTypes" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_Devices" Association="Self.FK_ServiceOrders_Devices">
+            <End Role="Devices" EntitySet="Devices" />
+            <End Role="ServiceOrders" EntitySet="ServiceOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_ServiceStatuses_ServiceOrders" Association="Self.FK_ServiceOrders_ServiceStatuses_ServiceOrders">
+            <End Role="ServiceOrders" EntitySet="ServiceOrders" />
+            <End Role="ServiceOrders_ServiceStatuses" EntitySet="ServiceOrders_ServiceStatuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_ServiceTypes_ServiceOrders" Association="Self.FK_ServiceOrders_ServiceTypes_ServiceOrders">
+            <End Role="ServiceOrders" EntitySet="ServiceOrders" />
+            <End Role="ServiceOrders_ServiceTypes" EntitySet="ServiceOrders_ServiceTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_Users" Association="Self.FK_ServiceOrders_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ServiceOrders" EntitySet="ServiceOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_ServiceStatuses_ServiceStatuses" Association="Self.FK_ServiceOrders_ServiceStatuses_ServiceStatuses">
+            <End Role="ServiceStatuses" EntitySet="ServiceStatuses" />
+            <End Role="ServiceOrders_ServiceStatuses" EntitySet="ServiceOrders_ServiceStatuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_ServiceStatuses_Users" Association="Self.FK_ServiceOrders_ServiceStatuses_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ServiceOrders_ServiceStatuses" EntitySet="ServiceOrders_ServiceStatuses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_ServiceTypes_ServiceTypes" Association="Self.FK_ServiceOrders_ServiceTypes_ServiceTypes">
+            <End Role="ServiceTypes" EntitySet="ServiceTypes" />
+            <End Role="ServiceOrders_ServiceTypes" EntitySet="ServiceOrders_ServiceTypes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WorksiteModelStoreContainer" CdmEntityContainer="WorksiteEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="WorksiteModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Devices">
+            <EntityTypeMapping TypeName="WorksiteModel.Device">
+              <MappingFragment StoreEntitySet="Devices">
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="InventNo" ColumnName="InventNo" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="DeviceTypeId" ColumnName="DeviceTypeId" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeviceTypes">
+            <EntityTypeMapping TypeName="WorksiteModel.DeviceType">
+              <MappingFragment StoreEntitySet="DeviceTypes">
+                <ScalarProperty Name="DeviceTypeId" ColumnName="DeviceTypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceOrders">
+            <EntityTypeMapping TypeName="WorksiteModel.ServiceOrder">
+              <MappingFragment StoreEntitySet="ServiceOrders">
+                <ScalarProperty Name="ServiceOrderId" ColumnName="ServiceOrderId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />
+                <ScalarProperty Name="CloseDate" ColumnName="CloseDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceOrders_ServiceStatuses">
+            <EntityTypeMapping TypeName="WorksiteModel.ServiceOrders_ServiceStatuses">
+              <MappingFragment StoreEntitySet="ServiceOrders_ServiceStatuses">
+                <ScalarProperty Name="ServiceOrders_ServiceStatusesId" ColumnName="ServiceOrders_ServiceStatusesId" />
+                <ScalarProperty Name="ServiceOrderId" ColumnName="ServiceOrderId" />
+                <ScalarProperty Name="ServiceStatusId" ColumnName="ServiceStatusId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceOrders_ServiceTypes">
+            <EntityTypeMapping TypeName="WorksiteModel.ServiceOrders_ServiceTypes">
+              <MappingFragment StoreEntitySet="ServiceOrders_ServiceTypes">
+                <ScalarProperty Name="ServiceOrders_ServiceTypesId" ColumnName="ServiceOrders_ServiceTypesId" />
+                <ScalarProperty Name="ServiceOrderId" ColumnName="ServiceOrderId" />
+                <ScalarProperty Name="ServiceTypeId" ColumnName="ServiceTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceStatuses">
+            <EntityTypeMapping TypeName="WorksiteModel.ServiceStatus">
+              <MappingFragment StoreEntitySet="ServiceStatuses">
+                <ScalarProperty Name="ServiceStatusId" ColumnName="ServiceStatusId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceTypes">
+            <EntityTypeMapping TypeName="WorksiteModel.ServiceType">
+              <MappingFragment StoreEntitySet="ServiceTypes">
+                <ScalarProperty Name="ServiceTypeId" ColumnName="ServiceTypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="WorksiteModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="WorksiteModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Administrator" ColumnName="Administrator" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="LoginTryCount" ColumnName="LoginTryCount" />
+                <ScalarProperty Name="LastLoginTryDateTime" ColumnName="LastLoginTryDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllDevices">
+            <EntityTypeMapping TypeName="WorksiteModel.AllDevice">
+              <MappingFragment StoreEntitySet="AllDevices">
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="InventNo" ColumnName="InventNo" />
+                <ScalarProperty Name="DeviceType" ColumnName="DeviceType" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllExpiredServices">
+            <EntityTypeMapping TypeName="WorksiteModel.AllExpiredService">
+              <MappingFragment StoreEntitySet="AllExpiredServices">
+                <ScalarProperty Name="ServiceOrderId" ColumnName="ServiceOrderId" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />
+                <ScalarProperty Name="ServiceStatus" ColumnName="ServiceStatus" />
+                <ScalarProperty Name="Employee" ColumnName="Employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllOpenServices">
+            <EntityTypeMapping TypeName="WorksiteModel.AllOpenService">
+              <MappingFragment StoreEntitySet="AllOpenServices">
+                <ScalarProperty Name="ServiceOrderId" ColumnName="ServiceOrderId" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />
+                <ScalarProperty Name="ServiceStatus" ColumnName="ServiceStatus" />
+                <ScalarProperty Name="Employee" ColumnName="Employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllServices">
+            <EntityTypeMapping TypeName="WorksiteModel.AllService">
+              <MappingFragment StoreEntitySet="AllServices">
+                <ScalarProperty Name="ServiceOrderId" ColumnName="ServiceOrderId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />
+                <ScalarProperty Name="CloseDate" ColumnName="CloseDate" />
+                <ScalarProperty Name="ServiceStatusName" ColumnName="ServiceStatusName" />
+                <ScalarProperty Name="ServiceValue" ColumnName="ServiceValue" />
+                <ScalarProperty Name="Employee" ColumnName="Employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllWrongStatusServices">
+            <EntityTypeMapping TypeName="WorksiteModel.AllWrongStatusService">
+              <MappingFragment StoreEntitySet="AllWrongStatusServices">
+                <ScalarProperty Name="ServiceOrderId" ColumnName="ServiceOrderId" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />
+                <ScalarProperty Name="CloseDate" ColumnName="CloseDate" />
+                <ScalarProperty Name="ServiceStatus" ColumnName="ServiceStatus" />
+                <ScalarProperty Name="Employee" ColumnName="Employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

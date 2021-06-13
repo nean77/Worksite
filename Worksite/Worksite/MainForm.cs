@@ -54,6 +54,7 @@ namespace Worksite
             InitializeComponent();
             setColor();
             initTextSettings();
+            this.Text += "   |    Zalogowany jako: " + Program.currentUser.FirstName + " " + Program.currentUser.LastName;
         }
     }
 }
