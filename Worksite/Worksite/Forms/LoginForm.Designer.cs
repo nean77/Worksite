@@ -45,14 +45,14 @@ namespace Worksite.Forms
             this.loginTxt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.loginTxt.Hint = "Login";
             this.loginTxt.LeadingIcon = null;
-            this.loginTxt.Location = new System.Drawing.Point(55, 157);
+            this.loginTxt.Location = new System.Drawing.Point(47, 136);
             this.loginTxt.MaxLength = 50;
             this.loginTxt.MouseState = MaterialSkin.MouseState.OUT;
             this.loginTxt.Multiline = false;
             this.loginTxt.Name = "loginTxt";
-            this.loginTxt.Size = new System.Drawing.Size(345, 50);
+            this.loginTxt.Size = new System.Drawing.Size(296, 50);
             this.loginTxt.TabIndex = 0;
-            this.loginTxt.Text = "";
+            this.loginTxt.Text = "nean";
             this.loginTxt.TrailingIcon = null;
             // 
             // passwordTxt
@@ -63,15 +63,15 @@ namespace Worksite.Forms
             this.passwordTxt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.passwordTxt.Hint = "Hasło";
             this.passwordTxt.LeadingIcon = global::Worksite.Properties.Resources.baseline_fingerprint_black_24dp;
-            this.passwordTxt.Location = new System.Drawing.Point(55, 230);
+            this.passwordTxt.Location = new System.Drawing.Point(47, 199);
             this.passwordTxt.MaxLength = 50;
             this.passwordTxt.MouseState = MaterialSkin.MouseState.OUT;
             this.passwordTxt.Multiline = false;
             this.passwordTxt.Name = "passwordTxt";
             this.passwordTxt.Password = true;
-            this.passwordTxt.Size = new System.Drawing.Size(345, 50);
+            this.passwordTxt.Size = new System.Drawing.Size(296, 50);
             this.passwordTxt.TabIndex = 1;
-            this.passwordTxt.Text = "";
+            this.passwordTxt.Text = "nean";
             this.passwordTxt.TrailingIcon = null;
             // 
             // loginBtn
@@ -81,8 +81,8 @@ namespace Worksite.Forms
             this.loginBtn.Depth = 0;
             this.loginBtn.HighEmphasis = true;
             this.loginBtn.Icon = null;
-            this.loginBtn.Location = new System.Drawing.Point(218, 339);
-            this.loginBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.loginBtn.Location = new System.Drawing.Point(187, 294);
+            this.loginBtn.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.loginBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.loginBtn.Name = "loginBtn";
             this.loginBtn.Size = new System.Drawing.Size(86, 36);
@@ -101,8 +101,8 @@ namespace Worksite.Forms
             this.cancelBtn.Depth = 0;
             this.cancelBtn.HighEmphasis = true;
             this.cancelBtn.Icon = null;
-            this.cancelBtn.Location = new System.Drawing.Point(312, 339);
-            this.cancelBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.cancelBtn.Location = new System.Drawing.Point(267, 294);
+            this.cancelBtn.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cancelBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(77, 36);
@@ -118,7 +118,7 @@ namespace Worksite.Forms
             this.headerLabel.Depth = 0;
             this.headerLabel.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.headerLabel.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.headerLabel.Location = new System.Drawing.Point(55, 93);
+            this.headerLabel.Location = new System.Drawing.Point(47, 81);
             this.headerLabel.MouseState = MaterialSkin.MouseState.HOVER;
             this.headerLabel.Name = "headerLabel";
             this.headerLabel.Size = new System.Drawing.Size(345, 29);
@@ -128,9 +128,9 @@ namespace Worksite.Forms
             // 
             // LoginForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(462, 407);
+            this.ClientSize = new System.Drawing.Size(396, 353);
             this.Controls.Add(this.headerLabel);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.loginBtn);
@@ -138,8 +138,8 @@ namespace Worksite.Forms
             this.Controls.Add(this.loginTxt);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(462, 407);
-            this.MinimumSize = new System.Drawing.Size(462, 407);
+            this.MaximumSize = new System.Drawing.Size(396, 353);
+            this.MinimumSize = new System.Drawing.Size(396, 353);
             this.Name = "LoginForm";
             this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

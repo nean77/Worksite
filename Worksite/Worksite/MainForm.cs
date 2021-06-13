@@ -15,7 +15,7 @@ namespace Worksite
     public partial class MainForm : MaterialForm
     {
         private readonly MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
-        private void SetColor()
+        private void setColor()
         {
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
@@ -25,18 +25,6 @@ namespace Worksite
                 Primary.Grey500,
                 Accent.Blue400,
                 TextShade.WHITE);
-        }
-
-        public MainForm()
-        {
-            InitializeComponent();
-            SetColor();
-            initTextSettings();
-        }
-
-        private void findServiceHomeBtn_Click(object sender, EventArgs e)
-        {
-            
         }
         private void initTextSettings()
         {
@@ -60,6 +48,12 @@ namespace Worksite
             this.expiredServiceCountTxt.TabIndex = 0;
             this.expiredServiceCountTxt.Text = "0000";
             this.expiredServiceCountTxt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+        }
+        public MainForm()
+        {
+            InitializeComponent();
+            setColor();
+            initTextSettings();
         }
     }
 }
