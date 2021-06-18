@@ -20,5 +20,6 @@ namespace Worksite
         public System.DateTime OpenDate { get; set; }
         public string ServiceStatus { get; set; }
         public string Employee { get; set; }
+        public long UserId { get; set; }
     }
 }

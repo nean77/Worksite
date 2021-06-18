@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WorksiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="WorksiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customers">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -134,6 +134,7 @@ warning 6002: The table/view 'Worksite.dbo.AllExpiredServices' does not have a p
             <PropertyRef Name="DeviceName" />
             <PropertyRef Name="OpenDate" />
             <PropertyRef Name="ServiceStatus" />
+            <PropertyRef Name="UserId" />
             <PropertyRef Name="Employee" />
           </Key>
           <Property Name="ServiceOrderId" Type="bigint" Nullable="false" />
@@ -141,6 +142,7 @@ warning 6002: The table/view 'Worksite.dbo.AllExpiredServices' does not have a p
           <Property Name="DeviceName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="OpenDate" Type="date" Nullable="false" />
           <Property Name="ServiceStatus" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
           <Property Name="Employee" Type="varchar" MaxLength="511" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -152,6 +154,7 @@ warning 6002: The table/view 'Worksite.dbo.AllOpenServices' does not have a prim
             <PropertyRef Name="DeviceName" />
             <PropertyRef Name="OpenDate" />
             <PropertyRef Name="ServiceStatus" />
+            <PropertyRef Name="UserId" />
             <PropertyRef Name="Employee" />
           </Key>
           <Property Name="ServiceOrderId" Type="bigint" Nullable="false" />
@@ -159,6 +162,7 @@ warning 6002: The table/view 'Worksite.dbo.AllOpenServices' does not have a prim
           <Property Name="DeviceName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="OpenDate" Type="date" Nullable="false" />
           <Property Name="ServiceStatus" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
           <Property Name="Employee" Type="varchar" MaxLength="511" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -352,6 +356,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
     [AllExpiredServices].[DeviceName] AS [DeviceName], 
     [AllExpiredServices].[OpenDate] AS [OpenDate], 
     [AllExpiredServices].[ServiceStatus] AS [ServiceStatus], 
+    [AllExpiredServices].[UserId] AS [UserId], 
     [AllExpiredServices].[Employee] AS [Employee]
     FROM [dbo].[AllExpiredServices] AS [AllExpiredServices]</DefiningQuery>
           </EntitySet>
@@ -362,6 +367,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
     [AllOpenServices].[DeviceName] AS [DeviceName], 
     [AllOpenServices].[OpenDate] AS [OpenDate], 
     [AllOpenServices].[ServiceStatus] AS [ServiceStatus], 
+    [AllOpenServices].[UserId] AS [UserId], 
     [AllOpenServices].[Employee] AS [Employee]
     FROM [dbo].[AllOpenServices] AS [AllOpenServices]</DefiningQuery>
           </EntitySet>
@@ -431,8 +437,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
             <End Role="ServiceOrders" EntitySet="ServiceOrders" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WorksiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -582,6 +587,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
             <PropertyRef Name="OpenDate" />
             <PropertyRef Name="ServiceStatus" />
             <PropertyRef Name="Employee" />
+            <PropertyRef Name="UserId" />
           </Key>
           <Property Name="ServiceOrderId" Type="Int64" Nullable="false" />
           <Property Name="DeviceId" Type="Int64" Nullable="false" />
@@ -589,6 +595,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
           <Property Name="OpenDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ServiceStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Employee" Type="String" MaxLength="511" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="AllOpenService">
           <Key>
@@ -598,6 +605,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
             <PropertyRef Name="OpenDate" />
             <PropertyRef Name="ServiceStatus" />
             <PropertyRef Name="Employee" />
+            <PropertyRef Name="UserId" />
           </Key>
           <Property Name="ServiceOrderId" Type="Int64" Nullable="false" />
           <Property Name="DeviceId" Type="Int64" Nullable="false" />
@@ -605,6 +613,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
           <Property Name="OpenDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ServiceStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Employee" Type="String" MaxLength="511" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="AllService">
           <Key>
@@ -956,6 +965,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
           <EntitySetMapping Name="AllExpiredServices">
             <EntityTypeMapping TypeName="WorksiteModel.AllExpiredService">
               <MappingFragment StoreEntitySet="AllExpiredServices">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ServiceOrderId" ColumnName="ServiceOrderId" />
                 <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
                 <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
@@ -968,6 +978,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
           <EntitySetMapping Name="AllOpenServices">
             <EntityTypeMapping TypeName="WorksiteModel.AllOpenService">
               <MappingFragment StoreEntitySet="AllOpenServices">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ServiceOrderId" ColumnName="ServiceOrderId" />
                 <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
                 <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />

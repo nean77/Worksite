@@ -36,9 +36,6 @@
             this.expiredServiceCountTxt = new System.Windows.Forms.Label();
             this.openServiceCountTxt = new System.Windows.Forms.Label();
             this.materialDivider1 = new MaterialSkin.Controls.MaterialDivider();
-            this.addCustomerHomeBtn = new MaterialSkin.Controls.MaterialButton();
-            this.findServiceHomeBtn = new MaterialSkin.Controls.MaterialButton();
-            this.addServiceHomeBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.infoSecLineServiceTxt = new MaterialSkin.Controls.MaterialLabel();
             this.servicesTxt = new MaterialSkin.Controls.MaterialLabel();
@@ -49,6 +46,9 @@
             this.devicesTab = new System.Windows.Forms.TabPage();
             this.statsTab = new System.Windows.Forms.TabPage();
             this.admtoolsTab = new System.Windows.Forms.TabPage();
+            this.addCustomerHomeBtn = new MaterialSkin.Controls.MaterialButton();
+            this.findServiceHomeBtn = new MaterialSkin.Controls.MaterialButton();
+            this.addServiceHomeBtn = new MaterialSkin.Controls.MaterialButton();
             this.TabControl.SuspendLayout();
             this.homeTab.SuspendLayout();
             this.SuspendLayout();
@@ -72,6 +72,8 @@
             this.menuIcons.Images.SetKeyName(12, "tools24.png");
             this.menuIcons.Images.SetKeyName(13, "user24.png");
             this.menuIcons.Images.SetKeyName(14, "wrench24.png");
+            this.menuIcons.Images.SetKeyName(15, "search.png");
+            this.menuIcons.Images.SetKeyName(16, "showMore.png");
             // 
             // TabControl
             // 
@@ -91,6 +93,7 @@
             this.TabControl.SelectedIndex = 0;
             this.TabControl.Size = new System.Drawing.Size(992, 642);
             this.TabControl.TabIndex = 0;
+            this.TabControl.TabIndexChanged += new System.EventHandler(this.TabControl_TabIndexChanged);
             // 
             // homeTab
             // 
@@ -151,63 +154,6 @@
             this.materialDivider1.Size = new System.Drawing.Size(3, 603);
             this.materialDivider1.TabIndex = 5;
             this.materialDivider1.Text = "materialDivider1";
-            // 
-            // addCustomerHomeBtn
-            // 
-            this.addCustomerHomeBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addCustomerHomeBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.addCustomerHomeBtn.Depth = 0;
-            this.addCustomerHomeBtn.HighEmphasis = true;
-            this.addCustomerHomeBtn.Icon = global::Worksite.Properties.Resources.plus;
-            this.addCustomerHomeBtn.Location = new System.Drawing.Point(193, 72);
-            this.addCustomerHomeBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.addCustomerHomeBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.addCustomerHomeBtn.Name = "addCustomerHomeBtn";
-            this.addCustomerHomeBtn.Size = new System.Drawing.Size(160, 36);
-            this.addCustomerHomeBtn.TabIndex = 2;
-            this.addCustomerHomeBtn.Text = "Dodaj klienta";
-            this.addCustomerHomeBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.addCustomerHomeBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.addCustomerHomeBtn.UseAccentColor = false;
-            this.addCustomerHomeBtn.UseVisualStyleBackColor = true;
-            // 
-            // findServiceHomeBtn
-            // 
-            this.findServiceHomeBtn.AutoSize = false;
-            this.findServiceHomeBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.findServiceHomeBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.findServiceHomeBtn.Depth = 0;
-            this.findServiceHomeBtn.HighEmphasis = true;
-            this.findServiceHomeBtn.Icon = global::Worksite.Properties.Resources.icons8_search_24px_1;
-            this.findServiceHomeBtn.Location = new System.Drawing.Point(15, 118);
-            this.findServiceHomeBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.findServiceHomeBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.findServiceHomeBtn.Name = "findServiceHomeBtn";
-            this.findServiceHomeBtn.Size = new System.Drawing.Size(338, 36);
-            this.findServiceHomeBtn.TabIndex = 3;
-            this.findServiceHomeBtn.Text = "Wyszukaj naprawę";
-            this.findServiceHomeBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.findServiceHomeBtn.UseAccentColor = false;
-            this.findServiceHomeBtn.UseVisualStyleBackColor = true;
-            // 
-            // addServiceHomeBtn
-            // 
-            this.addServiceHomeBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addServiceHomeBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.addServiceHomeBtn.Depth = 0;
-            this.addServiceHomeBtn.HighEmphasis = true;
-            this.addServiceHomeBtn.Icon = global::Worksite.Properties.Resources.plus;
-            this.addServiceHomeBtn.Location = new System.Drawing.Point(15, 72);
-            this.addServiceHomeBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.addServiceHomeBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.addServiceHomeBtn.Name = "addServiceHomeBtn";
-            this.addServiceHomeBtn.Size = new System.Drawing.Size(170, 36);
-            this.addServiceHomeBtn.TabIndex = 1;
-            this.addServiceHomeBtn.Text = "Dodaj naprawę";
-            this.addServiceHomeBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.addServiceHomeBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.addServiceHomeBtn.UseAccentColor = false;
-            this.addServiceHomeBtn.UseVisualStyleBackColor = true;
             // 
             // materialLabel3
             // 
@@ -283,6 +229,7 @@
             // 
             // customersTab
             // 
+            this.customersTab.BackColor = System.Drawing.SystemColors.Control;
             this.customersTab.ImageKey = "user24.png";
             this.customersTab.Location = new System.Drawing.Point(4, 31);
             this.customersTab.Name = "customersTab";
@@ -290,7 +237,6 @@
             this.customersTab.Size = new System.Drawing.Size(984, 607);
             this.customersTab.TabIndex = 1;
             this.customersTab.Text = "Klienci";
-            this.customersTab.UseVisualStyleBackColor = true;
             // 
             // servicesTab
             // 
@@ -332,6 +278,63 @@
             this.admtoolsTab.Text = "Administracja";
             this.admtoolsTab.UseVisualStyleBackColor = true;
             // 
+            // addCustomerHomeBtn
+            // 
+            this.addCustomerHomeBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.addCustomerHomeBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.addCustomerHomeBtn.Depth = 0;
+            this.addCustomerHomeBtn.HighEmphasis = true;
+            this.addCustomerHomeBtn.Icon = global::Worksite.Properties.Resources.plus;
+            this.addCustomerHomeBtn.Location = new System.Drawing.Point(193, 72);
+            this.addCustomerHomeBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.addCustomerHomeBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.addCustomerHomeBtn.Name = "addCustomerHomeBtn";
+            this.addCustomerHomeBtn.Size = new System.Drawing.Size(160, 36);
+            this.addCustomerHomeBtn.TabIndex = 2;
+            this.addCustomerHomeBtn.Text = "Dodaj klienta";
+            this.addCustomerHomeBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.addCustomerHomeBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.addCustomerHomeBtn.UseAccentColor = false;
+            this.addCustomerHomeBtn.UseVisualStyleBackColor = true;
+            // 
+            // findServiceHomeBtn
+            // 
+            this.findServiceHomeBtn.AutoSize = false;
+            this.findServiceHomeBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.findServiceHomeBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.findServiceHomeBtn.Depth = 0;
+            this.findServiceHomeBtn.HighEmphasis = true;
+            this.findServiceHomeBtn.Icon = global::Worksite.Properties.Resources.icons8_search_24px_1;
+            this.findServiceHomeBtn.Location = new System.Drawing.Point(15, 118);
+            this.findServiceHomeBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.findServiceHomeBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.findServiceHomeBtn.Name = "findServiceHomeBtn";
+            this.findServiceHomeBtn.Size = new System.Drawing.Size(338, 36);
+            this.findServiceHomeBtn.TabIndex = 3;
+            this.findServiceHomeBtn.Text = "Wyszukaj naprawę";
+            this.findServiceHomeBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.findServiceHomeBtn.UseAccentColor = false;
+            this.findServiceHomeBtn.UseVisualStyleBackColor = true;
+            // 
+            // addServiceHomeBtn
+            // 
+            this.addServiceHomeBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.addServiceHomeBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.addServiceHomeBtn.Depth = 0;
+            this.addServiceHomeBtn.HighEmphasis = true;
+            this.addServiceHomeBtn.Icon = global::Worksite.Properties.Resources.plus;
+            this.addServiceHomeBtn.Location = new System.Drawing.Point(15, 72);
+            this.addServiceHomeBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.addServiceHomeBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.addServiceHomeBtn.Name = "addServiceHomeBtn";
+            this.addServiceHomeBtn.Size = new System.Drawing.Size(170, 36);
+            this.addServiceHomeBtn.TabIndex = 1;
+            this.addServiceHomeBtn.Text = "Dodaj naprawę";
+            this.addServiceHomeBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.addServiceHomeBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.addServiceHomeBtn.UseAccentColor = false;
+            this.addServiceHomeBtn.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -360,9 +363,7 @@
         #endregion
 
         private System.Windows.Forms.ImageList menuIcons;
-        private MaterialSkin.Controls.MaterialTabControl TabControl;
         private System.Windows.Forms.TabPage homeTab;
-        private System.Windows.Forms.TabPage customersTab;
         private MaterialSkin.Controls.MaterialButton addCustomerHomeBtn;
         private MaterialSkin.Controls.MaterialButton findServiceHomeBtn;
         private MaterialSkin.Controls.MaterialButton addServiceHomeBtn;
@@ -378,6 +379,8 @@
         private System.Windows.Forms.TabPage admtoolsTab;
         private System.Windows.Forms.Label expiredServiceCountTxt;
         private System.Windows.Forms.Label openServiceCountTxt;
+        public MaterialSkin.Controls.MaterialTabControl TabControl;
+        public System.Windows.Forms.TabPage customersTab;
     }
 }
 

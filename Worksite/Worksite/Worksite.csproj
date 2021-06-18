@@ -97,12 +97,21 @@
     <Compile Include="Customer.cs">
       <DependentUpon>Worksite.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModels\CustomerModel.cs" />
     <Compile Include="Device.cs">
       <DependentUpon>Worksite.tt</DependentUpon>
     </Compile>
     <Compile Include="DeviceType.cs">
       <DependentUpon>Worksite.tt</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CustomerDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CustomerDetailsForm.Designer.cs">
+      <DependentUpon>CustomerDetailsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\DesignController.cs" />
+    <Compile Include="Helpers\UserUI helpers\CustomersPGHelpers.cs" />
     <Compile Include="Helpers\UserUI helpers\HomePGHelpers.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -139,6 +148,12 @@
     <Compile Include="User.cs">
       <DependentUpon>Worksite.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\CustomersUC\CustomersMainUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\CustomersUC\CustomersMainUC.Designer.cs">
+      <DependentUpon>CustomersMainUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="Worksite.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -170,6 +185,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UserControls\CustomersUC\CustomersMainUC.resx">
+      <DependentUpon>CustomersMainUC.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -204,6 +222,8 @@
     <Content Include="Resources\plusBlack.png" />
     <Content Include="Resources\round_backup_white_24dp.png" />
     <Content Include="Resources\round_http_white_24dp.png" />
+    <None Include="Resources\search.png" />
+    <None Include="Resources\showMore.png" />
     <Content Include="Resources\tools24.png" />
     <Content Include="Resources\user24.png" />
     <Content Include="Resources\worksideicon_GST_icon.ico" />

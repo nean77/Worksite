@@ -8,19 +8,23 @@ namespace Worksite.Helpers.UserUI_helpers
 {
     public class HomePGHelpers
     {
-        private byte openServices { get; set; }
-
-        public static byte getUserOpenServices()
+        public static int getUserOpenServices()
         {
             using (WorksiteEntities context = new WorksiteEntities())
             {
-                //var openServices = context.AllOpenServices
-                 //                   .Where(os => os.)
-
+                var openServices = context.AllOpenServices
+                                    .Count(os => os.UserId == Program.currentUser.UserId);
+                return openServices;
+            }          
+        }
+        public static int getUserExpiredServices()
+        {
+            using (WorksiteEntities context = new WorksiteEntities())
+            {
+                var openServices = context.AllExpiredServices
+                                    .Count(os => os.UserId == Program.currentUser.UserId);
+                return openServices;
             }
-
-            return 1;
-
         }
     }
 }
