@@ -88,9 +88,11 @@
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadDevicesEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IWriteCustomersEntityHelpers.cs" />
+    <Compile Include="Classes\EntityHelpers\Interfaces\IWriteDevicesEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\ReadEntityHepers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadServicesEntityHepers.cs" />
     <Compile Include="Classes\EntityHelpers\WriteCustomersEntityHelpers.cs" />
+    <Compile Include="Classes\EntityHelpers\WriteDevicesEntityHelpers.cs" />
     <Compile Include="Classes\Login.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -102,7 +104,14 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\NoCustomerDataChangesException.cs" />
+    <Compile Include="Exceptions\NoDeviceDataChangesException.cs" />
     <Compile Include="Exceptions\NonRecognizedUserException.cs" />
+    <Compile Include="Forms\AddEditDeviceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditDeviceForm.Designer.cs">
+      <DependentUpon>AddEditDeviceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AddEditCustomerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,6 +197,9 @@
     <Compile Include="UserControls\ServicesUserControl.Designer.cs">
       <DependentUpon>ServicesUserControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\AddEditDeviceForm.resx">
+      <DependentUpon>AddEditDeviceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddEditCustomerForm.resx">
       <DependentUpon>AddEditCustomerForm.cs</DependentUpon>
     </EmbeddedResource>

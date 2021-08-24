@@ -10,7 +10,21 @@ namespace Worksite.UserControls.Helpers
     public class CustomersControlHelpers : BaseUserControlHelpers
     {
         private Customer _cust;
+        private ICollection<Customer> _customers = new List<Customer>();
+
+        public CustomersControlHelpers()
+        {
+            fillList();
+        }
+
+        private async void fillList()
+        {
+            Customers = await GetCustomersAsync();
+        }
+
         public Customer Customer { get => _cust; set => _cust = value; }
+        public ICollection<Customer> Customers { get => _customers; set => _customers = value; }
+
         public static async Task<ICollection<Customer>> GetCustomersAsync()
         {
             ReadEntityHepers entityHelpers = new ReadEntityHepers();

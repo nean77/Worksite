@@ -9,7 +9,7 @@ namespace Worksite.Classes.EntityHelpers
     public class ReadEntityHepers : IReadEntityHelpers
     {
         CurrentUser currentUser = CurrentUser.GetInstance();
-
+                
         public ICollection<ServiceType> GetServiceTypes()
         {
             using (WorksiteEntities ctx = new WorksiteEntities())
@@ -49,7 +49,9 @@ namespace Worksite.Classes.EntityHelpers
         {
             using (WorksiteEntities ctx = new WorksiteEntities())
             {
-                return (Device)ctx.Devices.Select(x => x.DeviceId == Id);
+                return (Device)ctx.Devices
+                    .Include(c => c.Customer)
+                    .SingleOrDefault(x => x.DeviceId == Id);
             }
         }
         public Customer GetCustomerById(long Id)
@@ -111,6 +113,18 @@ namespace Worksite.Classes.EntityHelpers
                 return true;
             }
         }
+        public async Task<bool> HasDeviceChanges(Device device)
+        {
+            using (WorksiteEntities ctx = new WorksiteEntities())
+            {
+                Device dev = await ctx.Devices.FirstOrDefaultAsync(d => d.DeviceId == device.DeviceId);
 
+                if (dev.Equals(device))
+                {
+                    throw new NoDeviceDataChangesException();
+                }
+                return true;
+            }
+        }
     }
 }
