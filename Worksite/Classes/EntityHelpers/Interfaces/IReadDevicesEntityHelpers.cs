@@ -8,7 +8,7 @@ namespace Worksite.Classes.EntityHelpers
 {
     public interface IReadDevicesEntityHelpers
     {
-        Task<ICollection<AllDevice>> GetDevices();
+        Task<ICollection<Device>> GetDevices();
         Device GetDeviceById(long id);
         Device GetByInventNo(long inventNo);
 

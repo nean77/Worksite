@@ -32,7 +32,12 @@ namespace Worksite
         public System.DateTime CreatedDateTime { get; set; }
         public Nullable<int> LoginTryCount { get; set; }
         public Nullable<System.DateTime> LastLoginTryDateTime { get; set; }
-    
+
+        public override string ToString()
+        {
+            return FirstName + " " + LastName;
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceOrder> ServiceOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

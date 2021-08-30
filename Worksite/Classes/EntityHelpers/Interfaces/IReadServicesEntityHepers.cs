@@ -10,7 +10,7 @@ namespace Worksite.Classes.EntityHelpers
     {
         Task<T> GetUserOpenServices();
         Task<T> GetUserExpiredServices();
-        Task<ICollection<AllService>> GetServices();
+        Task<ICollection<ServiceOrder>> GetServices();
         ServiceOrder GetServiceById(long id);
     }
 }

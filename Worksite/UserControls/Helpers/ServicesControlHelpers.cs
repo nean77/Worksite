@@ -15,7 +15,7 @@ namespace Worksite.UserControls.Helpers
         public AllService AllServices { get => _services; set => _services = value; }
         public long ServiceId { get => _serviceId; set => _serviceId = value; }
 
-        public static async Task<ICollection<AllService>> GetServicesAsync()
+        public static async Task<ICollection<ServiceOrder>> GetServicesAsync()
         {
             ReadEntityHepers entityHelpers = new ReadEntityHepers();
 
@@ -27,6 +27,19 @@ namespace Worksite.UserControls.Helpers
             ReadEntityHepers entityHelpers = new ReadEntityHepers();
 
             return entityHelpers.GetServiceById(Id);
+        }
+
+        public static ICollection<ServiceType> GetServiceTypes()
+        {
+            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+
+            return entityHelpers.GetServiceTypes();
+        }
+        public static ICollection<ServiceStatus> GetServiceStatuses()
+        {
+            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+
+            return entityHelpers.GetServiceStatuses();
         }
     }
 }

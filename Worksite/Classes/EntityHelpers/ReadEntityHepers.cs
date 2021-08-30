@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,11 +32,21 @@ namespace Worksite.Classes.EntityHelpers
                 return ctx.Users.Select(x => x).Where(x => x.Active == true).ToList();
             }
         } 
-        public async Task<ICollection<AllService>> GetServices()
+        public async Task<ICollection<ServiceOrder>> GetServices()
         {
             using (WorksiteEntities ctx = new WorksiteEntities())
             {
-                return await ctx.AllServices.Select(x => x).ToListAsync();
+                await ctx.ServiceTypes.Select(x => x).ToListAsync();
+                await ctx.ServiceStatuses.Select(x => x).ToListAsync();
+                var list = await ctx.ServiceOrders.Select(x => x)
+                    .Include(so => so.Customer)
+                    .Include(so => so.Device)
+                    .Include(so => so.User)
+                    .Include(so => so.ServiceOrders_ServiceStatuses)                    
+                    .Include(so => so.ServiceOrders_ServiceTypes)                    
+                    .ToListAsync();
+
+                return list;
             }
         }
         public ServiceOrder GetServiceById(long Id)
@@ -75,11 +86,23 @@ namespace Worksite.Classes.EntityHelpers
                 return await ctx.Customers.Select(x => x).ToListAsync();
             }
         }
-        public async Task<ICollection<AllDevice>> GetDevices()
+        public async Task<ICollection<Device>> GetDevices()
         {
             using (WorksiteEntities ctx = new WorksiteEntities())
             {
-                return await ctx.AllDevices.Select(x => x).ToListAsync();
+                return await ctx.Devices.Select(x => x)
+                    .Include(c => c.Customer)
+                    .Include(d => d.DeviceType)
+                    .ToListAsync();
+            }
+        }
+        public async Task<ICollection<Device>> GetCustomerDevices(Customer customer)
+        {
+            using (WorksiteEntities ctx = new WorksiteEntities())
+            {
+                return await ctx.Devices.Select(x => x)
+                    .Where(c => c.CustomerId == customer.CustomerId)
+                    .ToListAsync();
             }
         }
         public async Task<int> GetUserExpiredServices()
@@ -126,5 +149,7 @@ namespace Worksite.Classes.EntityHelpers
                 return true;
             }
         }
+        
+    
     }
 }

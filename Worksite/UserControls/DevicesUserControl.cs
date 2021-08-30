@@ -21,7 +21,8 @@ namespace Worksite.UserControls
             devicesGrid.Rows.Clear();
             foreach (var d in devList)
             {
-                devicesGrid.Rows.Add(new object[] { d.DeviceId, d.Name, d.InventNo, d.DeviceType, d.FirstName, d.LastName });
+                int insertedRow = devicesGrid.Rows.Add(new object[] { d.DeviceId, d.Name, d.InventNo, d.DeviceType.Name, d.Customer.FirstName, d.Customer.LastName});
+                devicesGrid.Rows[insertedRow].Tag = d;
             }
         }
 
@@ -41,7 +42,7 @@ namespace Worksite.UserControls
                 MetroMessageBox.Show(this, "Aby edytować zaznacz sprzęt", "Brak rekodru", MessageBoxButtons.OK);
                 return;
             }
-            AddEditDeviceForm form = new AddEditDeviceForm((long?)devicesGrid.SelectedRows[0].Cells[0].Value);
+            AddEditDeviceForm form = new AddEditDeviceForm((Device)devicesGrid.SelectedRows[0].Tag);
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                 fillDevicesGrid();

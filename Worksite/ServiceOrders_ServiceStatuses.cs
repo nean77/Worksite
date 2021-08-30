@@ -23,5 +23,6 @@ namespace Worksite
         public virtual ServiceOrder ServiceOrder { get; set; }
         public virtual ServiceStatus ServiceStatus { get; set; }
         public virtual User User { get; set; }
+        
     }
 }

@@ -14,10 +14,11 @@ namespace Worksite.Forms
     public partial class AddEditDeviceForm : MetroForm
     {
         DevicesControlHelpers devicesControlHelpers = new DevicesControlHelpers();
-        long? _devId;
-        public AddEditDeviceForm(long? devId = null)
+        Device selectedDevice = new Device();
+
+        public AddEditDeviceForm(Device dev = null)
         {
-            _devId = devId;
+            selectedDevice = dev;
             InitializeComponent();
             init();
             initializeControlsContent();
@@ -37,7 +38,7 @@ namespace Worksite.Forms
             else
             {
                 this.Text = "Edycja sprzęt";
-                devicesControlHelpers.Device = DevicesControlHelpers.GetDeviceById(_devId);
+                devicesControlHelpers.Device = DevicesControlHelpers.GetDeviceById(selectedDevice.DeviceId);
                 nameTxt.Text = devicesControlHelpers.Device.Name;
                 inventNoTxt.Text = devicesControlHelpers.Device.InventNo.ToString();
                 devTypeComboBox.SelectedIndex = (int)devicesControlHelpers.Device.DeviceTypeId - 1;
@@ -65,7 +66,7 @@ namespace Worksite.Forms
                 return;
             }
             
-            if (_devId == null || _devId == 0)
+            if (selectedDevice == null || selectedDevice.DeviceId == 0)
             {
                 devicesControlHelpers.Device = new Device();
                 passDeviceDetails();
@@ -122,7 +123,7 @@ namespace Worksite.Forms
         }
         private void init()
         {
-            devicesControlHelpers.DevId = _devId;
+            devicesControlHelpers.DevId = selectedDevice.DeviceId;
         }
         private void cancelBtn_Click(object sender, EventArgs e)
         {

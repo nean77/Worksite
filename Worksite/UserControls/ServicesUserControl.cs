@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using MetroFramework;
 using MetroFramework.Controls;
+using Worksite.Forms;
 using Worksite.UserControls.Helpers;
 
 namespace Worksite.UserControls
@@ -23,11 +20,40 @@ namespace Worksite.UserControls
         private async void fillServicesGrid()
         {
             var servicesList = await ServicesControlHelpers.GetServicesAsync();
-
             servicesGrid.Rows.Clear();
             foreach (var s in servicesList)
             {
-                servicesGrid.Rows.Add(new object[] { s.ServiceOrderId, s.DeviceName, s.InventNo, s.LastName, s.ServiceStatusName, s.ServiceValue, s.Employee });
+                int insertedRow = servicesGrid.Rows.Add(
+                    new object[] {
+                        s.ServiceOrderId,
+                        s.Device.Name,
+                        s.Device.InventNo,
+                        s.Customer.LastName,
+                        s.ServiceOrders_ServiceStatuses.FirstOrDefault().ServiceStatus,
+                        s.ServiceOrders_ServiceTypes.Sum(x => x.ServiceType.Price),
+                        s.User
+                    });
+                servicesGrid.Rows[insertedRow].Tag = s;
+            }
+        }
+
+        private void addServiceBtn_Click(object sender, EventArgs e)
+        {
+            AddEditServiceForm form = new AddEditServiceForm();
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+                MetroMessageBox.Show(this, "Naprawa została przyjęta");
+                fillServicesGrid();
+            }
+        }
+
+        private void editServiceBtn_Click(object sender, EventArgs e)
+        {
+            AddEditServiceForm form = new AddEditServiceForm((ServiceOrder)servicesGrid.SelectedRows[0].Tag);
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+                MetroMessageBox.Show(this, "Naprawa została zmodyfikowana");
+                fillServicesGrid();
             }
         }
     }

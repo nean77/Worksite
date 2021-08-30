@@ -106,6 +106,12 @@
     <Compile Include="Exceptions\NoCustomerDataChangesException.cs" />
     <Compile Include="Exceptions\NoDeviceDataChangesException.cs" />
     <Compile Include="Exceptions\NonRecognizedUserException.cs" />
+    <Compile Include="Forms\AddEditServiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditServiceForm.Designer.cs">
+      <DependentUpon>AddEditServiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AddEditDeviceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +203,9 @@
     <Compile Include="UserControls\ServicesUserControl.Designer.cs">
       <DependentUpon>ServicesUserControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\AddEditServiceForm.resx">
+      <DependentUpon>AddEditServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddEditDeviceForm.resx">
       <DependentUpon>AddEditDeviceForm.cs</DependentUpon>
     </EmbeddedResource>
