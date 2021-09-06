@@ -11,6 +11,6 @@ namespace Worksite.Classes.EntityHelpers
         Task<ICollection<Device>> GetDevices();
         Device GetDeviceById(long id);
         Device GetByInventNo(long inventNo);
-
+        Task<bool> HasDeviceChanges(Device device);
     }
 }

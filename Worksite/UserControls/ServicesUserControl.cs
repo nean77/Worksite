@@ -22,7 +22,7 @@ namespace Worksite.UserControls
             var servicesList = await ServicesControlHelpers.GetServicesAsync();
             servicesGrid.Rows.Clear();
             foreach (var s in servicesList)
-            {
+            {              
                 int insertedRow = servicesGrid.Rows.Add(
                     new object[] {
                         s.ServiceOrderId,
@@ -30,7 +30,7 @@ namespace Worksite.UserControls
                         s.Device.InventNo,
                         s.Customer.LastName,
                         s.ServiceOrders_ServiceStatuses.FirstOrDefault().ServiceStatus,
-                        s.ServiceOrders_ServiceTypes.Sum(x => x.ServiceType.Price),
+                        ServicesControlHelpers.GetServicePrice(s),
                         s.User
                     });
                 servicesGrid.Rows[insertedRow].Tag = s;

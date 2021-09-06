@@ -49,11 +49,19 @@ namespace Worksite.Classes.EntityHelpers
                 return list;
             }
         }
-        public ServiceOrder GetServiceById(long Id)
+        public async Task<ServiceOrder> GetServiceById(long Id)
         {
             using (WorksiteEntities ctx = new WorksiteEntities())
             {
-                return (ServiceOrder)ctx.ServiceOrders.Select(x => x.ServiceOrderId == Id);
+                await ctx.ServiceTypes.Select(x => x).ToListAsync();
+                await ctx.ServiceStatuses.Select(x => x).ToListAsync();
+
+                var order = await ctx.ServiceOrders
+                        .Include(so => so.ServiceOrders_ServiceStatuses)
+                        .Include(so => so.ServiceOrders_ServiceTypes)
+                        .FirstOrDefaultAsync(x => x.ServiceOrderId == Id);
+
+                return order;
             }
         }
         public Device GetDeviceById(long Id)
@@ -149,7 +157,30 @@ namespace Worksite.Classes.EntityHelpers
                 return true;
             }
         }
+        public async Task<bool> HasServiceChanges(ServiceOrder serviceOrder)
+        {
+            using (WorksiteEntities ctx = new WorksiteEntities())
+            {
+                ServiceOrder so = await ctx.ServiceOrders
+                    .Include(x=> x.ServiceOrders_ServiceStatuses)
+                    .FirstOrDefaultAsync(s => s.ServiceOrderId == serviceOrder.ServiceOrderId);
+
+                if (so.Equals(serviceOrder))
+                {
+                    throw new NoServiceDataChangesException();
+                }
+                return true;
+            }
+        }
+        public decimal GetOtherWorkHours(long serviceId)
+        {
+            using (WorksiteEntities ctx = new WorksiteEntities())
+            {
+                return (decimal) ctx.ServiceOrders_ServiceTypes
+                    .Where(x => x.ServiceOrderId == serviceId && x.ServiceTypeId == 8)
+                    .Sum(x => x.Hours); 
+            }
+        }
         
-    
     }
 }

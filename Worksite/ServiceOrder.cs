@@ -11,7 +11,8 @@ namespace Worksite
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class ServiceOrder
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +21,7 @@ namespace Worksite
             this.ServiceOrders_ServiceStatuses = new HashSet<ServiceOrders_ServiceStatuses>();
             this.ServiceOrders_ServiceTypes = new HashSet<ServiceOrders_ServiceTypes>();
         }
-    
+
         public long ServiceOrderId { get; set; }
         public long CustomerId { get; set; }
         public long DeviceId { get; set; }
@@ -29,7 +30,7 @@ namespace Worksite
         public string Description { get; set; }
         public Nullable<long> UserId { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
-    
+
         public virtual Customer Customer { get; set; }
         public virtual Device Device { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -41,6 +42,29 @@ namespace Worksite
         public override string ToString()
         {
             return base.ToString();
+        }
+        public override bool Equals(object obj)
+        {
+            try
+            {
+                ServiceOrder so = obj as ServiceOrder;
+
+                if (CustomerId == so.CustomerId &&
+                    DeviceId == so.DeviceId &&
+                    OpenDate == so.OpenDate &&
+                    CloseDate == so.CloseDate &&
+                    Description == so.Description &&
+                    UserId == so.UserId &&
+                    ServiceOrders_ServiceStatuses.FirstOrDefault().ServiceStatusId == so.ServiceOrders_ServiceStatuses.FirstOrDefault().ServiceStatusId)
+                {
+                    return true;
+                }
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            return false;
         }
     }
 }

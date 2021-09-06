@@ -225,6 +225,7 @@
             this.inventNoTxt.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.inventNoTxt.CustomButton.UseSelectable = true;
             this.inventNoTxt.CustomButton.Visible = false;
+            this.inventNoTxt.Enabled = false;
             this.inventNoTxt.Lines = new string[0];
             this.inventNoTxt.Location = new System.Drawing.Point(440, 168);
             this.inventNoTxt.MaxLength = 32767;

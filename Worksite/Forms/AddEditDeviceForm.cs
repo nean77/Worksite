@@ -123,7 +123,7 @@ namespace Worksite.Forms
         }
         private void init()
         {
-            devicesControlHelpers.DevId = selectedDevice.DeviceId;
+            devicesControlHelpers.DevId = selectedDevice != null ? (long)selectedDevice.DeviceId : (long?)null;
         }
         private void cancelBtn_Click(object sender, EventArgs e)
         {

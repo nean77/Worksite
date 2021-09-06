@@ -89,10 +89,12 @@
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IWriteCustomersEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IWriteDevicesEntityHelpers.cs" />
+    <Compile Include="Classes\EntityHelpers\Interfaces\IWriteServiceEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\ReadEntityHepers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadServicesEntityHepers.cs" />
     <Compile Include="Classes\EntityHelpers\WriteCustomersEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\WriteDevicesEntityHelpers.cs" />
+    <Compile Include="Classes\EntityHelpers\WriteServiceEntityHelpers.cs" />
     <Compile Include="Classes\Login.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -106,6 +108,7 @@
     <Compile Include="Exceptions\NoCustomerDataChangesException.cs" />
     <Compile Include="Exceptions\NoDeviceDataChangesException.cs" />
     <Compile Include="Exceptions\NonRecognizedUserException.cs" />
+    <Compile Include="Exceptions\NoServiceDataChangesException.cs" />
     <Compile Include="Forms\AddEditServiceForm.cs">
       <SubType>Form</SubType>
     </Compile>

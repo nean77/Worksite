@@ -1,6 +1,9 @@
 ﻿using MetroFramework;
+using MetroFramework.Controls;
 using MetroFramework.Forms;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Worksite.Classes;
@@ -11,8 +14,9 @@ namespace Worksite.Forms
 {
     public partial class AddEditServiceForm : MetroForm
     {
-        DevicesControlHelpers devicesControlHelpers = new DevicesControlHelpers();
+        ServicesControlHelpers servicesControlHelpers = new ServicesControlHelpers();
         ServiceOrder serviceOrder = new ServiceOrder();
+        Dictionary<long, string> serviceTypesDict = new Dictionary<long, string>();
         
         public AddEditServiceForm(ServiceOrder selectedService = null)
         {
@@ -21,13 +25,13 @@ namespace Worksite.Forms
             initializeControlsContent();
         }
         #region Methods
-        private void initializeControlsContent()
-        {
-            fillServiceTypesCheckBoxes();
-            fillCustomerCombo();
+        private async void initializeControlsContent()
+        {            
+            await fillCustomerCombo();
             fillServiceStatusCombo();
             fillUserCombo();
-            
+            fillServiceTypesCheckBoxes();
+
             if (serviceOrder == null)
             {
                 this.Text = "Nowa naprawa";
@@ -35,16 +39,28 @@ namespace Worksite.Forms
             else
             {
                 this.Text = "Edycja naprawy";
+                serviceIdTxt.Text = serviceOrder.ServiceOrderId.ToString();
+
                 int idx = customerComboBox.FindString(serviceOrder.Customer.ToString());
                 customerComboBox.SelectedIndex = idx;
 
-                //devicesControlHelpers.Device = DevicesControlHelpers.GetDeviceById(_devId);
-                //nameTxt.Text = devicesControlHelpers.Device.Name;
-                //inventNoTxt.Text = devicesControlHelpers.Device.InventNo.ToString();
-                //devTypeComboBox.SelectedIndex = (int)devicesControlHelpers.Device.DeviceTypeId - 1;
-                //serialTxt.Text = devicesControlHelpers.Device.SerialNumber;
-                //int idx = customerComboBox.FindString(devicesControlHelpers.Device.Customer.ToString());
-                //customerComboBox.SelectedIndex = idx;
+                await fillCustomerDeviceCombo((Customer)customerComboBox.SelectedItem);
+                idx = deviceComboBox.FindString(serviceOrder.Device.ToString());
+                deviceComboBox.SelectedIndex = idx;
+
+                var q = serviceOrder.ServiceOrders_ServiceStatuses.First();
+                idx = serviceStatusComboBox.FindString(q.ServiceStatus.Name);
+                serviceStatusComboBox.SelectedIndex = idx;
+
+                startDateTime.Value = serviceOrder.OpenDate;
+                endDateTime.Value = serviceOrder.CloseDate == null ? serviceOrder.OpenDate.AddDays(14) : (DateTime)serviceOrder.CloseDate;
+
+                idx = userComboBox.FindString(serviceOrder.User.ToString());
+                userComboBox.SelectedIndex = idx;
+
+                descriptionTxt.Text = serviceOrder.Description;
+
+                selectServiceTypesCheckBoxes(serviceOrder.ServiceOrders_ServiceTypes);
             }
         }
         private void fillServiceTypesCheckBoxes(bool reloadNames = true)
@@ -56,20 +72,23 @@ namespace Worksite.Forms
                 try
                 {                    
                     string name = "metroCheckBox" + i;
-                    Control[] x = Controls.Find(name, false);
+                    MetroCheckBox ctrl = Controls.Find(name, false)[0] as MetroCheckBox;
                     if (reloadNames)
                     {
-                        x[0].Text = l.Name;
-                        x[0].Tag = l;
+                        ctrl.Text = l.Name;
+                        ctrl.Tag = l;
+                        serviceTypesDict.Add(l.ServiceTypeId, name);
+                        ctrl.Enabled = false;
+
                     }
                     if (serviceStatusComboBox.SelectedIndex > 0 &&
                         serviceStatusComboBox.SelectedIndex < 4)
                     {
-                        x[0].Enabled = true;
+                        ctrl.Enabled = true;
                     }
                     else
                     {
-                        x[0].Enabled = false;
+                        ctrl.Enabled = false;
                     }
                         i++;
                 }
@@ -77,6 +96,23 @@ namespace Worksite.Forms
                 {
                     //save log
                 }
+            }
+        }
+        private void selectServiceTypesCheckBoxes(ICollection<ServiceOrders_ServiceTypes> collection)
+        {
+            foreach (var c in collection)
+            {
+                string value;
+                serviceTypesDict.TryGetValue(c.ServiceTypeId, out value);
+                MetroCheckBox ctrl = Controls.Find(value, false)[0] as MetroCheckBox;
+                if (c.ServiceTypeId == 8)
+                {
+                    hoursQtyTxt.Text = serviceOrder.ServiceOrders_ServiceTypes
+                        .Where(x => x.ServiceOrderId == serviceOrder.ServiceOrderId && x.ServiceTypeId == 8)
+                        .Sum(x => x.Hours)
+                        .ToString();
+                }
+                ctrl.Checked = true;
             }
         }
         private void fillUserCombo()
@@ -88,7 +124,7 @@ namespace Worksite.Forms
                 userComboBox.Items.Add(u);
             }
         }
-        private async void fillCustomerCombo()
+        private async Task fillCustomerCombo()
         {            
             var custList = await CustomersControlHelpers.GetCustomersAsync();
             customerComboBox.Items.Clear();
@@ -98,7 +134,7 @@ namespace Worksite.Forms
             }
             
         }
-        private async void fillCustomerDeviceCombo(Customer cust)
+        private async Task fillCustomerDeviceCombo(Customer cust)
         {
             var devList = await DevicesControlHelpers.GetCustomerDevicesAsync(cust);
             deviceComboBox.Items.Clear();
@@ -117,34 +153,59 @@ namespace Worksite.Forms
                 serviceStatusComboBox.Items.Add(s);
             }
         }
-        private async void saveBtn_Click(object sender, EventArgs e)
+        private List<ServiceOrders_ServiceTypes> getSelectedServiceOrder_ServiceTypes()
         {
-            /*
+            List<ServiceOrders_ServiceTypes> list = new List<ServiceOrders_ServiceTypes>();
+            for (int i=1; i<9; i++)
+            {
+                try
+                {
+                    string name = "metroCheckBox" + i;
+                    MetroCheckBox ctrl = Controls.Find(name, false)[0] as MetroCheckBox;
+                    
+                    if (ctrl.Checked)
+                    {
+                        if (i == 8)
+                        {
+                            list.Add(new ServiceOrders_ServiceTypes(serviceOrder.ServiceOrderId, ((ServiceType)ctrl.Tag).ServiceTypeId, Convert.ToDecimal(hoursQtyTxt.Text)));
+                            break;
+                        }
+                        list.Add(new ServiceOrders_ServiceTypes(serviceOrder.ServiceOrderId, ((ServiceType)ctrl.Tag).ServiceTypeId, null));
+                    }
+                }
+                catch
+                {
+                    //save log
+                }
+            }
+            return list;
+        }
+        private async void saveBtn_Click(object sender, EventArgs e)
+        {            
             bool result;
             if (!validateFields())
             {
                 return;
             }
             
-            if (_devId == null || _devId == 0)
+            if (serviceOrder == null)
             {
-                devicesControlHelpers.Device = new Device();
-                passDeviceDetails();
+                passServiceDetails();
             }
-            
-            if (devicesControlHelpers.Device.DeviceId > 0)
+            if (serviceOrder.ServiceOrderId > 0)
             {
-                passDeviceDetails();
+                passServiceDetails();
                 try
                 {
-                    bool hasChanges = await devicesControlHelpers.HasChanges();
+                    serviceOrder.ServiceOrders_ServiceTypes = getSelectedServiceOrder_ServiceTypes();
+                    bool hasChanges = await servicesControlHelpers.HasChanges();
                 }
-                catch (NoDeviceDataChangesException)
+                catch (NoServiceDataChangesException)
                 {
                     MetroMessageBox.Show(this, "Nie dokonano zmian danych", "Brak zmian", MessageBoxButtons.OK);
                     return;
                 }
-                result = await devicesControlHelpers.UpdateAsync();
+                result = await servicesControlHelpers.UpdateAsync(getSelectedServiceOrder_ServiceTypes());
                 if (!result)
                 {
                     MetroMessageBox.Show(this, "Błąd aktualizacji danych", "Brak zmian", MessageBoxButtons.OK);
@@ -152,7 +213,7 @@ namespace Worksite.Forms
             }
             else
             {
-                result = await devicesControlHelpers.SaveAsync();
+                result = await servicesControlHelpers.SaveAsync();
                 if (!result)
                 {
                     MetroMessageBox.Show(this, "Błąd zapisu danych", "Brak zmian", MessageBoxButtons.OK);
@@ -161,29 +222,37 @@ namespace Worksite.Forms
             }
             DialogResult = DialogResult.OK;
             Close();
-            */
         }
-        private void passDeviceDetails()
+        private void passServiceDetails()
         {
-            /*
-            devicesControlHelpers.Device.Name = nameTxt.Text;
-            devicesControlHelpers.Device.InventNo = (int?)Convert.ToInt32(inventNoTxt.Text);
-            devicesControlHelpers.Device.SerialNumber = serialTxt.Text;
-            devicesControlHelpers.Device.DeviceTypeId = (int)((DeviceTypes.DeviceType)(devTypeComboBox.SelectedItem));
-            devicesControlHelpers.Device.CustomerId = ((Customer)customerComboBox.SelectedItem).CustomerId;
-            */
+            CurrentUser currentUser = CurrentUser.GetInstance();
+            servicesControlHelpers.ServiceOrder = serviceOrder;
+            servicesControlHelpers.ServiceOrder.ServiceOrders_ServiceStatuses = serviceOrder.ServiceOrders_ServiceStatuses;
+
+            servicesControlHelpers.ServiceOrder.CustomerId = ((Customer)customerComboBox.SelectedItem).CustomerId;
+            servicesControlHelpers.ServiceOrder.DeviceId = ((Device)deviceComboBox.SelectedItem).DeviceId;
+            servicesControlHelpers.ServiceOrder.OpenDate = startDateTime.Value;
+            servicesControlHelpers.ServiceOrder.CloseDate = endDateTime.Value;
+            servicesControlHelpers.ServiceOrder.Description = descriptionTxt.Text;
+            servicesControlHelpers.ServiceOrder.UserId = ((User)userComboBox.SelectedItem).UserId;
+            servicesControlHelpers.ServiceOrder.ServiceOrders_ServiceStatuses.FirstOrDefault().ServiceStatusId = ((ServiceStatus)serviceStatusComboBox.SelectedItem).ServiceStatusId;
+            servicesControlHelpers.ServiceOrder.ServiceOrders_ServiceStatuses.FirstOrDefault().UserId = currentUser.UserId;
         }
-        private void validateFields()
+        private bool validateFields()
         {
-            /*
-            if ( nameTxt.Text == "" || devTypeComboBox.SelectedIndex == -1 || customerComboBox.SelectedIndex == -1)
+            
+            if (customerComboBox.SelectedIndex == -1 ||
+                deviceComboBox.SelectedIndex == -1 ||
+                userComboBox.SelectedIndex == -1 ||
+                serviceStatusComboBox.SelectedIndex == -1 ||
+                (metroCheckBox8.Checked && hoursQtyTxt.Text == String.Empty)
+                )
             {
                 MetroMessageBox.Show(this, "Nie wszystkie pola wymagane są wypełnione", "Wypełnij wymagane pola", MessageBoxButtons.OK);
                 return false;
             }
             
-            return true;
-            */
+            return true;            
         }
         #endregion
         #region Events
@@ -195,6 +264,7 @@ namespace Worksite.Forms
         {
             customerComboBox.SelectedIndex = deviceComboBox.SelectedIndex = userComboBox.SelectedIndex = serviceStatusComboBox.SelectedIndex = -1;
             startDateTime.Value = endDateTime.Value = DateTime.Now.Date;
+            inventNoTxt.Text = string.Empty;
         }
         private void addCustomer_Click(object sender, EventArgs e)
         {
@@ -204,14 +274,14 @@ namespace Worksite.Forms
                 fillCustomerCombo();
             }
         }
-        private void addDeviceBtn_Click(object sender, EventArgs e)
+        private async void addDeviceBtn_Click(object sender, EventArgs e)
         {
             AddEditDeviceForm form = new AddEditDeviceForm();
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                 if (customerComboBox.SelectedIndex > -1)
                 {
-                    fillCustomerDeviceCombo((Customer)customerComboBox.SelectedItem);
+                    await fillCustomerDeviceCombo((Customer)customerComboBox.SelectedItem);
                 }
             }
         }
@@ -236,16 +306,30 @@ namespace Worksite.Forms
         }
         private void serviceStatusComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            fillServiceTypesCheckBoxes(false);
+            try
+            {
+                fillServiceTypesCheckBoxes(false);
+            }
+            catch (Exception ex)
+            { }
         }
-        private void customerComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            fillCustomerDeviceCombo((Customer)customerComboBox.SelectedItem);
-
+        private async void customerComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {            
+            try
+            {
+                await fillCustomerDeviceCombo((Customer)customerComboBox.SelectedItem);
+            }
+            catch (Exception ex)
+            { }
         }
         private void deviceComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            inventNoTxt.Text = ((Device)(deviceComboBox.SelectedItem)).InventNo.ToString();
+            try
+            {
+                inventNoTxt.Text = ((Device)(deviceComboBox.SelectedItem)).InventNo.ToString();
+            }
+            catch(Exception ex)
+            { }
         }
         #endregion
 

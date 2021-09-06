@@ -11,6 +11,8 @@ namespace Worksite.Classes.EntityHelpers
         Task<T> GetUserOpenServices();
         Task<T> GetUserExpiredServices();
         Task<ICollection<ServiceOrder>> GetServices();
-        ServiceOrder GetServiceById(long id);
+        Task<bool> HasServiceChanges(ServiceOrder serviceOrder);
+        Task<ServiceOrder> GetServiceById(long id);
+        decimal GetOtherWorkHours(long serviceId);
     }
 }

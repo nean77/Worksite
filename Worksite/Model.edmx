@@ -65,6 +65,7 @@
           <Property Name="ServiceOrders_ServiceTypesId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ServiceOrderId" Type="bigint" Nullable="false" />
           <Property Name="ServiceTypeId" Type="bigint" Nullable="false" />
+          <Property Name="Hours" Type="decimal" Precision="5" Scale="2" />
         </EntityType>
         <EntityType Name="ServiceStatuses">
           <Key>
@@ -516,6 +517,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
           <Property Name="ServiceTypeId" Type="Int64" Nullable="false" />
           <NavigationProperty Name="ServiceOrder" Relationship="Self.FK_ServiceOrders_ServiceTypes_ServiceOrders" FromRole="ServiceOrders_ServiceTypes" ToRole="ServiceOrders" />
           <NavigationProperty Name="ServiceType" Relationship="Self.FK_ServiceOrders_ServiceTypes_ServiceTypes" FromRole="ServiceOrders_ServiceTypes" ToRole="ServiceTypes" />
+          <Property Name="Hours" Type="Decimal" Precision="5" Scale="2" />
         </EntityType>
         <EntityType Name="ServiceStatus">
           <Key>
@@ -896,6 +898,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
           <EntitySetMapping Name="ServiceOrders_ServiceTypes">
             <EntityTypeMapping TypeName="Model.ServiceOrders_ServiceTypes">
               <MappingFragment StoreEntitySet="ServiceOrders_ServiceTypes">
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
                 <ScalarProperty Name="ServiceOrders_ServiceTypesId" ColumnName="ServiceOrders_ServiceTypesId" />
                 <ScalarProperty Name="ServiceOrderId" ColumnName="ServiceOrderId" />
                 <ScalarProperty Name="ServiceTypeId" ColumnName="ServiceTypeId" />
