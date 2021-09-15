@@ -49,11 +49,22 @@ namespace Worksite.UserControls.Helpers
             decimal defaultServicesPrice, hoursSum, otherServicePrice = 0;
             defaultServicesPrice = s.ServiceOrders_ServiceTypes.Where(x => x.ServiceTypeId < 8).Sum(x => x.ServiceType.Price);
             hoursSum = (decimal)s.ServiceOrders_ServiceTypes.Where(x => x.ServiceTypeId == 8).Sum(x => x.Hours);
-            otherServicePrice = s.ServiceOrders_ServiceTypes.Where(x => x.ServiceTypeId == 8).FirstOrDefault().ServiceType.Price * hoursSum;
-
+            try
+            {
+                otherServicePrice = s.ServiceOrders_ServiceTypes.Where(x => x.ServiceTypeId == 8).FirstOrDefault().ServiceType.Price * hoursSum;
+            }
+            catch(Exception)
+            {
+                otherServicePrice = 0;
+            }
             return Math.Round(defaultServicesPrice + otherServicePrice, 2);
         }
-        public async Task<bool> SaveAsync() { return true; }
+        public async Task<bool> SaveAsync()
+        {
+            WriteServiceEntityHelpers writeHelpers = new WriteServiceEntityHelpers();
+
+            return await writeHelpers.Save(ServiceOrder);
+        }
         public async Task<bool> UpdateAsync(List<ServiceOrders_ServiceTypes> serviceOrders_ServiceTypes)
         {
             WriteServiceEntityHelpers writeHelpers = new WriteServiceEntityHelpers();

@@ -35,6 +35,8 @@ namespace Worksite.Forms
             if (serviceOrder == null)
             {
                 this.Text = "Nowa naprawa";
+                serviceStatusComboBox.SelectedIndex = 0;
+                serviceStatusComboBox.Enabled = false;
             }
             else
             {
@@ -190,9 +192,9 @@ namespace Worksite.Forms
             
             if (serviceOrder == null)
             {
-                passServiceDetails();
+                passServiceDetails(true);
             }
-            if (serviceOrder.ServiceOrderId > 0)
+            if (serviceOrder != null && serviceOrder.ServiceOrderId > 0)
             {
                 passServiceDetails();
                 try
@@ -223,20 +225,27 @@ namespace Worksite.Forms
             DialogResult = DialogResult.OK;
             Close();
         }
-        private void passServiceDetails()
+        private void passServiceDetails(bool isNewService=false)
         {
             CurrentUser currentUser = CurrentUser.GetInstance();
-            servicesControlHelpers.ServiceOrder = serviceOrder;
-            servicesControlHelpers.ServiceOrder.ServiceOrders_ServiceStatuses = serviceOrder.ServiceOrders_ServiceStatuses;
+            if (!isNewService)
+            {
+                servicesControlHelpers.ServiceOrder = serviceOrder;
+                servicesControlHelpers.ServiceOrder.ServiceOrders_ServiceStatuses = serviceOrder.ServiceOrders_ServiceStatuses;
 
+                servicesControlHelpers.ServiceOrder.ServiceOrders_ServiceStatuses.FirstOrDefault().ServiceStatusId = ((ServiceStatus)serviceStatusComboBox.SelectedItem).ServiceStatusId;
+                servicesControlHelpers.ServiceOrder.ServiceOrders_ServiceStatuses.FirstOrDefault().UserId = currentUser.UserId;
+            }
+            else
+            {
+                servicesControlHelpers.ServiceOrder = new ServiceOrder();
+            }
             servicesControlHelpers.ServiceOrder.CustomerId = ((Customer)customerComboBox.SelectedItem).CustomerId;
             servicesControlHelpers.ServiceOrder.DeviceId = ((Device)deviceComboBox.SelectedItem).DeviceId;
             servicesControlHelpers.ServiceOrder.OpenDate = startDateTime.Value;
             servicesControlHelpers.ServiceOrder.CloseDate = endDateTime.Value;
             servicesControlHelpers.ServiceOrder.Description = descriptionTxt.Text;
             servicesControlHelpers.ServiceOrder.UserId = ((User)userComboBox.SelectedItem).UserId;
-            servicesControlHelpers.ServiceOrder.ServiceOrders_ServiceStatuses.FirstOrDefault().ServiceStatusId = ((ServiceStatus)serviceStatusComboBox.SelectedItem).ServiceStatusId;
-            servicesControlHelpers.ServiceOrder.ServiceOrders_ServiceStatuses.FirstOrDefault().UserId = currentUser.UserId;
         }
         private bool validateFields()
         {

@@ -11,7 +11,8 @@ namespace Worksite
 {
     using System;
     using System.Collections.Generic;
-    
+    using Worksite.Classes;
+
     public partial class ServiceOrders_ServiceStatuses
     {
         public long ServiceOrders_ServiceStatusesId { get; set; }
@@ -19,6 +20,16 @@ namespace Worksite
         public long ServiceStatusId { get; set; }
         public long UserId { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
+
+        public ServiceOrders_ServiceStatuses() { }
+        public ServiceOrders_ServiceStatuses(long ServiceOrderId, long ServiceStatusId)
+        {
+            CurrentUser currentUser = CurrentUser.GetInstance();
+            this.ServiceOrderId = ServiceOrderId;
+            this.ServiceStatusId = ServiceStatusId;
+            UserId = currentUser.UserId;
+            CreatedDateTime = DateTime.Now;
+        }
     
         public virtual ServiceOrder ServiceOrder { get; set; }
         public virtual ServiceStatus ServiceStatus { get; set; }

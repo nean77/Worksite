@@ -45,5 +45,20 @@ namespace Worksite.UserControls
                 MetroMessageBox.Show(this, "Dodano nowego klienta", "Zapisano nowego klienta", MessageBoxButtons.OK);
             }
         }
+
+        private void addServiceHomeBtn_Click(object sender, EventArgs e)
+        {
+            AddEditServiceForm form = new AddEditServiceForm();
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+                MetroMessageBox.Show(this, "Naprawa została przyjęta");
+            }
+        }
+
+        private void findServiceHomeBtn_Click(object sender, EventArgs e)
+        {
+            FindServiceForm findService = new FindServiceForm();
+            findService.ShowDialog(this);
+        }
     }
 }

@@ -12,29 +12,50 @@ namespace Worksite.Classes.EntityHelpers
     public class WriteServiceEntityHelpers : IWriteServiceEntityHelpers
     {
         private long _serviceOrderId;
-        public Task<bool> Save(ServiceOrder serviceOrder)
+        public async Task<bool> Save(ServiceOrder serviceOrder)
         {
-            throw new NotImplementedException();
+            using (WorksiteEntities ctx = new WorksiteEntities())
+            {
+                using (DbContextTransaction transaction = ctx.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        ctx.ServiceOrders.Add(serviceOrder);
+                        await ctx.SaveChangesAsync();
+                        long idx = serviceOrder.ServiceOrderId;
+                        ctx.ServiceOrders_ServiceStatuses.Add(new ServiceOrders_ServiceStatuses(idx, 1));
+                        await ctx.SaveChangesAsync();
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
+                }
+                return true;
+            }
         }
 
         public async Task<bool> Update(ServiceOrder serviceOrder, List<ServiceOrders_ServiceTypes> list)
         {
             _serviceOrderId = serviceOrder.ServiceOrderId;
-            try
+            using (WorksiteEntities ctx = new WorksiteEntities())
             {
-                using (WorksiteEntities ctx = new WorksiteEntities())
+                using (DbContextTransaction transaction = ctx.Database.BeginTransaction())
                 {
-                    var so = await ServicesControlHelpers.GetServiceById(serviceOrder.ServiceOrderId);
-
-                    so.CustomerId = serviceOrder.CustomerId;
-                    so.DeviceId = serviceOrder.DeviceId;
-                    so.OpenDate = serviceOrder.OpenDate;
-                    so.CloseDate = serviceOrder.CloseDate;
-                    so.UserId = serviceOrder.UserId;
-                    so.Description = serviceOrder.Description;
-
                     try
                     {
+                        var so = await ServicesControlHelpers.GetServiceById(serviceOrder.ServiceOrderId);
+
+                        so.CustomerId = serviceOrder.CustomerId;
+                        so.DeviceId = serviceOrder.DeviceId;
+                        so.OpenDate = serviceOrder.OpenDate;
+                        so.CloseDate = serviceOrder.CloseDate;
+                        so.UserId = serviceOrder.UserId;
+                        so.Description = serviceOrder.Description;
+
                         using (WorksiteEntities contx = new WorksiteEntities())
                         {
                             var soss = await contx.ServiceOrders_ServiceStatuses.Where(x => x.ServiceOrderId == so.ServiceOrderId).SingleOrDefaultAsync();
@@ -44,38 +65,27 @@ namespace Worksite.Classes.EntityHelpers
 
                             await contx.SaveChangesAsync();
                         }
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        return false;
+
+                        if (!await deleteServiceTypes())
+                        {
+                            throw new Exception();
+                        }
+                        if (!await insertNewServiceTypes(list))
+                        {
+                            throw new Exception();
+                        }
+                        ctx.Entry(so).State = EntityState.Modified;
+                        await ctx.SaveChangesAsync();
+                        transaction.Commit();
                     }
                     catch (Exception)
                     {
+                        transaction.Rollback();
                         return false;
                     }
-
-                    if (!await deleteServiceTypes())
-                    {
-                        throw new Exception();
-                    }
-                    if (!await insertNewServiceTypes(list))
-                    {
-                        throw new Exception();
-                    }
-
-                    ctx.Entry(so).State = EntityState.Modified;
-                    await ctx.SaveChangesAsync();
                 }
+                return true;
             }
-            catch (InvalidOperationException)
-            {
-                return false;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            return true;
         }
 
         private async Task<bool> insertNewServiceTypes(List<ServiceOrders_ServiceTypes> list)

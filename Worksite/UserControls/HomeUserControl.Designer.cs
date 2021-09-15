@@ -50,6 +50,7 @@
             this.addServiceHomeBtn.TabIndex = 1;
             this.addServiceHomeBtn.Text = "DODAJ NAPRAWĘ";
             this.addServiceHomeBtn.UseSelectable = true;
+            this.addServiceHomeBtn.Click += new System.EventHandler(this.addServiceHomeBtn_Click);
             // 
             // addCustomerHomeBtn
             // 
@@ -75,6 +76,7 @@
             this.findServiceHomeBtn.TabIndex = 3;
             this.findServiceHomeBtn.Text = "WYSZUKAJ NAPRAWĘ";
             this.findServiceHomeBtn.UseSelectable = true;
+            this.findServiceHomeBtn.Click += new System.EventHandler(this.findServiceHomeBtn_Click);
             // 
             // infoHeaderServiceTxt
             // 
