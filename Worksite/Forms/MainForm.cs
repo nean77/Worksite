@@ -36,5 +36,10 @@ namespace Worksite.Forms
         {
             DevicesControlHelpers.SetUpUserControl(metroPanelContainer, new DevicesUserControl());
         }
+
+        private void AdmToolsTile_Click(object sender, System.EventArgs e)
+        {
+            AdministrationControlHelpers.SetUpUserControl(metroPanelContainer, new AdministrationUserControl());
+        }
     }
 }

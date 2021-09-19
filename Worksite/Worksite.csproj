@@ -87,11 +87,13 @@
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadCustomersEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadDevicesEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadEntityHelpers.cs" />
+    <Compile Include="Classes\EntityHelpers\Interfaces\IWriteAdministrationEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IWriteCustomersEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IWriteDevicesEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IWriteServiceEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\ReadEntityHepers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadServicesEntityHepers.cs" />
+    <Compile Include="Classes\EntityHelpers\WriteAdministrationEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\WriteCustomersEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\WriteDevicesEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\WriteServiceEntityHelpers.cs" />
@@ -183,6 +185,12 @@
     <Compile Include="User.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\AdministrationUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\AdministrationUserControl.Designer.cs">
+      <DependentUpon>AdministrationUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\CustomersUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -195,6 +203,7 @@
     <Compile Include="UserControls\DevicesUserControl.Designer.cs">
       <DependentUpon>DevicesUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Helpers\AdministrationControlHelpers.cs" />
     <Compile Include="UserControls\Helpers\BaseUserControlHelpers.cs" />
     <Compile Include="UserControls\Helpers\CustomersControlHelpers.cs" />
     <Compile Include="UserControls\Helpers\DevicesControlHelpers.cs" />
@@ -239,6 +248,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\AdministrationUserControl.resx">
+      <DependentUpon>AdministrationUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\CustomersUserControl.resx">
       <DependentUpon>CustomersUserControl.cs</DependentUpon>
     </EmbeddedResource>

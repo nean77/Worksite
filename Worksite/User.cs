@@ -28,6 +28,7 @@ namespace Worksite
         public string Password { get; set; }
         public string Email { get; set; }
         public bool Active { get; set; }
+        public bool ChangePassword { get; set; }
         public bool Administrator { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
         public Nullable<int> LoginTryCount { get; set; }

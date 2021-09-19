@@ -79,6 +79,7 @@
             this.AdmToolsTile.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
             this.AdmToolsTile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             this.AdmToolsTile.UseSelectable = true;
+            this.AdmToolsTile.Click += new System.EventHandler(this.AdmToolsTile_Click);
             // 
             // StatsTile
             // 
