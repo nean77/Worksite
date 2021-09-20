@@ -46,7 +46,7 @@
           <Property Name="CloseDate" Type="date" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="UserId" Type="bigint" />
-          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="ServiceOrders_ServiceStatuses">
           <Key>
@@ -101,9 +101,10 @@
           <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Login" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="binary" MaxLength="32" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="64" />
           <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="ChangePassword" Type="bit" Nullable="false" />
           <Property Name="Administrator" Type="bit" Nullable="false" />
           <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
           <Property Name="LoginTryCount" Type="int" />
@@ -488,12 +489,12 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
           <Property Name="CloseDate" Type="DateTime" Precision="0" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="Int64" />
-          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_ServiceOrders_Customers" FromRole="ServiceOrders" ToRole="Customers" />
           <NavigationProperty Name="Device" Relationship="Self.FK_ServiceOrders_Devices" FromRole="ServiceOrders" ToRole="Devices" />
           <NavigationProperty Name="ServiceOrders_ServiceStatuses" Relationship="Self.FK_ServiceOrders_ServiceStatuses_ServiceOrders" FromRole="ServiceOrders" ToRole="ServiceOrders_ServiceStatuses" />
           <NavigationProperty Name="ServiceOrders_ServiceTypes" Relationship="Self.FK_ServiceOrders_ServiceTypes_ServiceOrders" FromRole="ServiceOrders" ToRole="ServiceOrders_ServiceTypes" />
-          <NavigationProperty Name="User" Relationship="Self.FK_ServiceOrders_Users" FromRole="ServiceOrders" ToRole="Users" />
+          <NavigationProperty Name="User" Relationship="Model.FK_ServiceOrders_Users" FromRole="ServiceOrder" ToRole="User" />
         </EntityType>
         <EntityType Name="ServiceOrders_ServiceStatuses">
           <Key>
@@ -506,7 +507,7 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
           <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ServiceOrder" Relationship="Self.FK_ServiceOrders_ServiceStatuses_ServiceOrders" FromRole="ServiceOrders_ServiceStatuses" ToRole="ServiceOrders" />
           <NavigationProperty Name="ServiceStatus" Relationship="Self.FK_ServiceOrders_ServiceStatuses_ServiceStatuses" FromRole="ServiceOrders_ServiceStatuses" ToRole="ServiceStatuses" />
-          <NavigationProperty Name="User" Relationship="Self.FK_ServiceOrders_ServiceStatuses_Users" FromRole="ServiceOrders_ServiceStatuses" ToRole="Users" />
+          <NavigationProperty Name="User" Relationship="Model.FK_ServiceOrders_ServiceStatuses_Users" FromRole="ServiceOrders_ServiceStatuses" ToRole="User" />
         </EntityType>
         <EntityType Name="ServiceOrders_ServiceTypes">
           <Key>
@@ -546,24 +547,6 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Login" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="Administrator" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LoginTryCount" Type="Int32" />
-          <Property Name="LastLoginTryDateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ServiceOrders" Relationship="Self.FK_ServiceOrders_Users" FromRole="Users" ToRole="ServiceOrders" />
-          <NavigationProperty Name="ServiceOrders_ServiceStatuses" Relationship="Self.FK_ServiceOrders_ServiceStatuses_Users" FromRole="Users" ToRole="ServiceOrders_ServiceStatuses" />
         </EntityType>
         <EntityType Name="AllDevice">
           <Key>
@@ -726,18 +709,6 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ServiceOrders_Users">
-          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
-          <End Role="ServiceOrders" Type="Self.ServiceOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="ServiceOrders">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ServiceOrders_ServiceStatuses_ServiceStatuses">
           <End Role="ServiceStatuses" Type="Self.ServiceStatus" Multiplicity="1" />
           <End Role="ServiceOrders_ServiceStatuses" Type="Self.ServiceOrders_ServiceStatuses" Multiplicity="*" />
@@ -747,18 +718,6 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
             </Principal>
             <Dependent Role="ServiceOrders_ServiceStatuses">
               <PropertyRef Name="ServiceStatusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ServiceOrders_ServiceStatuses_Users">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="ServiceOrders_ServiceStatuses" Type="Self.ServiceOrders_ServiceStatuses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="ServiceOrders_ServiceStatuses">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -784,7 +743,6 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
           <EntitySet Name="ServiceStatuses" EntityType="Self.ServiceStatus" />
           <EntitySet Name="ServiceTypes" EntityType="Self.ServiceType" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="AllDevices" EntityType="Self.AllDevice" />
           <EntitySet Name="AllExpiredServices" EntityType="Self.AllExpiredService" />
           <EntitySet Name="AllOpenServices" EntityType="Self.AllOpenService" />
@@ -814,23 +772,67 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
             <End Role="ServiceOrders" EntitySet="ServiceOrders" />
             <End Role="ServiceOrders_ServiceTypes" EntitySet="ServiceOrders_ServiceTypes" />
           </AssociationSet>
-          <AssociationSet Name="FK_ServiceOrders_Users" Association="Self.FK_ServiceOrders_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="ServiceOrders" EntitySet="ServiceOrders" />
-          </AssociationSet>
           <AssociationSet Name="FK_ServiceOrders_ServiceStatuses_ServiceStatuses" Association="Self.FK_ServiceOrders_ServiceStatuses_ServiceStatuses">
             <End Role="ServiceStatuses" EntitySet="ServiceStatuses" />
-            <End Role="ServiceOrders_ServiceStatuses" EntitySet="ServiceOrders_ServiceStatuses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceOrders_ServiceStatuses_Users" Association="Self.FK_ServiceOrders_ServiceStatuses_Users">
-            <End Role="Users" EntitySet="Users" />
             <End Role="ServiceOrders_ServiceStatuses" EntitySet="ServiceOrders_ServiceStatuses" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceOrders_ServiceTypes_ServiceTypes" Association="Self.FK_ServiceOrders_ServiceTypes_ServiceTypes">
             <End Role="ServiceTypes" EntitySet="ServiceTypes" />
             <End Role="ServiceOrders_ServiceTypes" EntitySet="ServiceOrders_ServiceTypes" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="Model.User" />
+          <AssociationSet Name="FK_ServiceOrders_Users" Association="Model.FK_ServiceOrders_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ServiceOrder" EntitySet="ServiceOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceOrders_ServiceStatuses_Users" Association="Model.FK_ServiceOrders_ServiceStatuses_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ServiceOrders_ServiceStatuses" EntitySet="ServiceOrders_ServiceStatuses" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="Binary" Nullable="false" MaxLength="32" FixedLength="true" />
+          <Property Name="Email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="ChangePassword" Type="Boolean" Nullable="false" />
+          <Property Name="Administrator" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LoginTryCount" Type="Int32" />
+          <Property Name="LastLoginTryDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ServiceOrders" Relationship="Model.FK_ServiceOrders_Users" FromRole="User" ToRole="ServiceOrder" />
+          <NavigationProperty Name="ServiceOrders_ServiceStatuses" Relationship="Model.FK_ServiceOrders_ServiceStatuses_Users" FromRole="User" ToRole="ServiceOrders_ServiceStatuses" />
+        </EntityType>
+        <Association Name="FK_ServiceOrders_Users">
+          <End Type="Model.User" Role="User" Multiplicity="0..1" />
+          <End Type="Model.ServiceOrder" Role="ServiceOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ServiceOrder">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceOrders_ServiceStatuses_Users">
+          <End Type="Model.User" Role="User" Multiplicity="1" />
+          <End Type="Model.ServiceOrders_ServiceStatuses" Role="ServiceOrders_ServiceStatuses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ServiceOrders_ServiceStatuses">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -934,23 +936,6 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="Model.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Administrator" ColumnName="Administrator" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
-                <ScalarProperty Name="LoginTryCount" ColumnName="LoginTryCount" />
-                <ScalarProperty Name="LastLoginTryDateTime" ColumnName="LastLoginTryDateTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AllDevices">
             <EntityTypeMapping TypeName="Model.AllDevice">
               <MappingFragment StoreEntitySet="AllDevices">
@@ -1015,6 +1000,24 @@ warning 6002: The table/view 'Worksite.dbo.AllWrongStatusServices' does not have
                 <ScalarProperty Name="CloseDate" ColumnName="CloseDate" />
                 <ScalarProperty Name="ServiceStatus" ColumnName="ServiceStatus" />
                 <ScalarProperty Name="Employee" ColumnName="Employee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Model.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="LastLoginTryDateTime" ColumnName="LastLoginTryDateTime" />
+                <ScalarProperty Name="LoginTryCount" ColumnName="LoginTryCount" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="Administrator" ColumnName="Administrator" />
+                <ScalarProperty Name="ChangePassword" ColumnName="ChangePassword" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

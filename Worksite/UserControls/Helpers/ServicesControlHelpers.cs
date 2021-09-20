@@ -16,31 +16,31 @@ namespace Worksite.UserControls.Helpers
 
         public static async Task<ICollection<ServiceOrder>> GetServicesAsync()
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return await entityHelpers.GetServices();
         }
         public static Task<ServiceOrder> GetServiceById(long Id)
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return entityHelpers.GetServiceById(Id);
         }
         public static ICollection<ServiceType> GetServiceTypes()
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return entityHelpers.GetServiceTypes();
         }
         public static ICollection<ServiceStatus> GetServiceStatuses()
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return entityHelpers.GetServiceStatuses();
         }
         public async Task<bool> HasChanges()
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return await entityHelpers.HasServiceChanges(ServiceOrder);
         }

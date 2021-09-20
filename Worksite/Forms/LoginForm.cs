@@ -26,16 +26,29 @@ namespace Worksite.Forms
             try
             {
                 CurrentUser currentUser = CurrentUser.GetInstance();
-                currentUser.SetCurUser(login.LoginUser().UserId,
-                    login.LoginUser().FirstName,
-                    login.LoginUser().LastName,
-                    login.LoginUser().Administrator);
+                User user = login.LoginUser();
+
+                currentUser.SetCurUser(user.UserId, user.FirstName, user.LastName, user.Administrator);
             }
             catch (NonRecognizedUserException)
             {
                 warningLabel.Text = "Błąd logowania";
                 warningLabel.Visible = true;
                 return false;
+            }
+            catch (FirstLoginUserException ex)
+            {
+                ChangePasswordForm form = new ChangePasswordForm(ex.User);
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    MetroMessageBox.Show(this, "Hasło zostało zmienione, możesz się zalogować", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
+                else
+                {
+                    MetroMessageBox.Show(this, "Przerwałeś operację zmiany hasła", "Niepowodzenie", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
             }
             catch (Exception ex)
             {
@@ -61,7 +74,7 @@ namespace Worksite.Forms
         {
             if (e.KeyChar == 13)
             {
-                if (!String.IsNullOrEmpty(passwdTxt.Text) || !String.IsNullOrEmpty(loginTxt.Text))
+                if (!String.IsNullOrEmpty(loginTxt.Text))
                 {
                     loginBtn.PerformClick();
                 }

@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="Model.ServiceStatus" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.ServiceType" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.sysdiagram" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.AllDevice" Width="1.5" PointX="9.75" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.AllExpiredService" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.AllOpenService" Width="1.5" PointX="9.75" PointY="8.75" IsExpanded="true" />
@@ -26,10 +25,11 @@
         <AssociationConnector Association="Model.FK_ServiceOrders_Devices" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ServiceOrders_ServiceStatuses_ServiceOrders" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ServiceOrders_ServiceTypes_ServiceOrders" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_ServiceOrders_Users" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ServiceOrders_ServiceStatuses_ServiceStatuses" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.FK_ServiceOrders_ServiceStatuses_Users" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_ServiceOrders_ServiceTypes_ServiceTypes" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="0.75" PointY="8" />
+        <AssociationConnector Association="Model.FK_ServiceOrders_Users" />
+        <AssociationConnector Association="Model.FK_ServiceOrders_ServiceStatuses_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

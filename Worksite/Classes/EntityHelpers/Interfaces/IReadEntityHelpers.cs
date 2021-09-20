@@ -10,6 +10,7 @@ namespace Worksite.Classes.EntityHelpers
     {
         ICollection<ServiceStatus> GetServiceStatuses();
         ICollection<User> GetActiveEmployees();
+        Task<ICollection<User>> GetAllEmployees();
         ICollection<ServiceType> GetServiceTypes();
 
     }

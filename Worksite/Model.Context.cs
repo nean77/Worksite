@@ -34,11 +34,11 @@ namespace Worksite
         public virtual DbSet<ServiceStatus> ServiceStatuses { get; set; }
         public virtual DbSet<ServiceType> ServiceTypes { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<AllDevice> AllDevices { get; set; }
         public virtual DbSet<AllExpiredService> AllExpiredServices { get; set; }
         public virtual DbSet<AllOpenService> AllOpenServices { get; set; }
         public virtual DbSet<AllService> AllServices { get; set; }
         public virtual DbSet<AllWrongStatusService> AllWrongStatusServices { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

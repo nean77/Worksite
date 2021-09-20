@@ -107,6 +107,7 @@
     <Compile Include="DeviceType.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\FirstLoginUserException.cs" />
     <Compile Include="Exceptions\NoCustomerDataChangesException.cs" />
     <Compile Include="Exceptions\NoDeviceDataChangesException.cs" />
     <Compile Include="Exceptions\NonRecognizedUserException.cs" />
@@ -134,6 +135,12 @@
     </Compile>
     <Compile Include="Forms\FindServiceForm.Designer.cs">
       <DependentUpon>FindServiceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChangePasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangePasswordForm.Designer.cs">
+      <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
@@ -232,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FindServiceForm.resx">
       <DependentUpon>FindServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangePasswordForm.resx">
+      <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

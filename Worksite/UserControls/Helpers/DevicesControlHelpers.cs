@@ -14,26 +14,26 @@ namespace Worksite.UserControls.Helpers
 
         public static async Task<ICollection<Device>> GetDevicesAsync()
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return await entityHelpers.GetDevices();
         }
         public static async Task<ICollection<Device>> GetCustomerDevicesAsync(Customer cust)
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return await entityHelpers.GetCustomerDevices(cust);
         }
         public static ICollection<User> GetEmployees()
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return entityHelpers.GetActiveEmployees();
         }
         public static Device GetDeviceById(long? Id)
         {
             long id;
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             if (Id == null)
             {
@@ -47,7 +47,7 @@ namespace Worksite.UserControls.Helpers
         }
         public async Task<bool> HasChanges()
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return await entityHelpers.HasDeviceChanges(Device);
         }

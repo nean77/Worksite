@@ -1,4 +1,5 @@
 ﻿using MetroFramework.Forms;
+using System;
 using System.Windows.Forms;
 using Worksite.Classes;
 using Worksite.UserControls;
@@ -15,6 +16,12 @@ namespace Worksite.Forms
             InitializeComponent();
             HomeTile_Click(this, new System.EventArgs());
             LoggedLabel.Text += " " + currentUser.ToString();
+            HideIfNotAdmin();
+        }
+
+        private void HideIfNotAdmin()
+        {
+            StatsTile.Visible = AdmToolsTile.Visible = currentUser.Administrator;
         }
 
         private void HomeTile_Click(object sender, System.EventArgs e)

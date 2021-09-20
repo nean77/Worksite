@@ -7,7 +7,7 @@ using Worksite.Exceptions;
 
 namespace Worksite.Classes.EntityHelpers
 {
-    public class ReadEntityHepers : IReadEntityHelpers
+    public class ReadEntityHelpers : IReadEntityHelpers
     {
         CurrentUser currentUser = CurrentUser.GetInstance();
                 
@@ -31,7 +31,14 @@ namespace Worksite.Classes.EntityHelpers
             {
                 return ctx.Users.Select(x => x).Where(x => x.Active == true).ToList();
             }
-        } 
+        }
+        public async Task<ICollection<User>> GetAllEmployees()
+        {
+            using (WorksiteEntities ctx = new WorksiteEntities())
+            {
+                return await ctx.Users.Select(x => x).ToListAsync();
+            }
+        }
         public async Task<ICollection<ServiceOrder>> GetServices()
         {
             using (WorksiteEntities ctx = new WorksiteEntities())

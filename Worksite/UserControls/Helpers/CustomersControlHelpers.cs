@@ -27,14 +27,14 @@ namespace Worksite.UserControls.Helpers
 
         public static async Task<ICollection<Customer>> GetCustomersAsync()
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return await entityHelpers.GetCustomers();
         }
 
         public async Task<bool> HasChanges()
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return await entityHelpers.HasCustomerChanges(Customer);
         }

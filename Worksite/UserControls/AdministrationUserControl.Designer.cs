@@ -37,6 +37,18 @@
             this.emailTxt = new MetroFramework.Controls.MetroTextBox();
             this.isActiveCheckBox = new MetroFramework.Controls.MetroCheckBox();
             this.isAdminCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.firstNameListTxt = new MetroFramework.Controls.MetroTextBox();
+            this.lastNameListTxt = new MetroFramework.Controls.MetroTextBox();
+            this.loginListTxt = new MetroFramework.Controls.MetroTextBox();
+            this.emailListTxt = new MetroFramework.Controls.MetroTextBox();
+            this.isactiveListCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.isadminListCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.resetPasswdListCheckBox = new MetroFramework.Controls.MetroCheckBox();
+            this.updateBtn = new MetroFramework.Controls.MetroButton();
+            this.usersListBox = new System.Windows.Forms.ListBox();
+            this.idTxt = new MetroFramework.Controls.MetroTextBox();
+            this.userListLabel = new MetroFramework.Controls.MetroLabel();
+            this.idLabel = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
             // 
             // administrationLabel
@@ -229,18 +241,260 @@
             this.isAdminCheckBox.Text = "Administrator";
             this.isAdminCheckBox.UseSelectable = true;
             // 
+            // firstNameListTxt
+            // 
+            // 
+            // 
+            // 
+            this.firstNameListTxt.CustomButton.Image = null;
+            this.firstNameListTxt.CustomButton.Location = new System.Drawing.Point(131, 1);
+            this.firstNameListTxt.CustomButton.Name = "";
+            this.firstNameListTxt.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.firstNameListTxt.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.firstNameListTxt.CustomButton.TabIndex = 1;
+            this.firstNameListTxt.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.firstNameListTxt.CustomButton.UseSelectable = true;
+            this.firstNameListTxt.CustomButton.Visible = false;
+            this.firstNameListTxt.Lines = new string[0];
+            this.firstNameListTxt.Location = new System.Drawing.Point(241, 182);
+            this.firstNameListTxt.MaxLength = 32767;
+            this.firstNameListTxt.Name = "firstNameListTxt";
+            this.firstNameListTxt.PasswordChar = '\0';
+            this.firstNameListTxt.PromptText = "Imię";
+            this.firstNameListTxt.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.firstNameListTxt.SelectedText = "";
+            this.firstNameListTxt.SelectionLength = 0;
+            this.firstNameListTxt.SelectionStart = 0;
+            this.firstNameListTxt.ShortcutsEnabled = true;
+            this.firstNameListTxt.Size = new System.Drawing.Size(153, 23);
+            this.firstNameListTxt.TabIndex = 2;
+            this.firstNameListTxt.UseSelectable = true;
+            this.firstNameListTxt.WaterMark = "Imię";
+            this.firstNameListTxt.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.firstNameListTxt.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // lastNameListTxt
+            // 
+            // 
+            // 
+            // 
+            this.lastNameListTxt.CustomButton.Image = null;
+            this.lastNameListTxt.CustomButton.Location = new System.Drawing.Point(131, 1);
+            this.lastNameListTxt.CustomButton.Name = "";
+            this.lastNameListTxt.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.lastNameListTxt.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.lastNameListTxt.CustomButton.TabIndex = 1;
+            this.lastNameListTxt.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.lastNameListTxt.CustomButton.UseSelectable = true;
+            this.lastNameListTxt.CustomButton.Visible = false;
+            this.lastNameListTxt.Lines = new string[0];
+            this.lastNameListTxt.Location = new System.Drawing.Point(241, 211);
+            this.lastNameListTxt.MaxLength = 32767;
+            this.lastNameListTxt.Name = "lastNameListTxt";
+            this.lastNameListTxt.PasswordChar = '\0';
+            this.lastNameListTxt.PromptText = "Nazwisko";
+            this.lastNameListTxt.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.lastNameListTxt.SelectedText = "";
+            this.lastNameListTxt.SelectionLength = 0;
+            this.lastNameListTxt.SelectionStart = 0;
+            this.lastNameListTxt.ShortcutsEnabled = true;
+            this.lastNameListTxt.Size = new System.Drawing.Size(153, 23);
+            this.lastNameListTxt.TabIndex = 3;
+            this.lastNameListTxt.UseSelectable = true;
+            this.lastNameListTxt.WaterMark = "Nazwisko";
+            this.lastNameListTxt.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.lastNameListTxt.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // loginListTxt
+            // 
+            // 
+            // 
+            // 
+            this.loginListTxt.CustomButton.Image = null;
+            this.loginListTxt.CustomButton.Location = new System.Drawing.Point(131, 1);
+            this.loginListTxt.CustomButton.Name = "";
+            this.loginListTxt.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.loginListTxt.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.loginListTxt.CustomButton.TabIndex = 1;
+            this.loginListTxt.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.loginListTxt.CustomButton.UseSelectable = true;
+            this.loginListTxt.CustomButton.Visible = false;
+            this.loginListTxt.Lines = new string[0];
+            this.loginListTxt.Location = new System.Drawing.Point(241, 240);
+            this.loginListTxt.MaxLength = 32767;
+            this.loginListTxt.Name = "loginListTxt";
+            this.loginListTxt.PasswordChar = '\0';
+            this.loginListTxt.PromptText = "Login";
+            this.loginListTxt.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.loginListTxt.SelectedText = "";
+            this.loginListTxt.SelectionLength = 0;
+            this.loginListTxt.SelectionStart = 0;
+            this.loginListTxt.ShortcutsEnabled = true;
+            this.loginListTxt.Size = new System.Drawing.Size(153, 23);
+            this.loginListTxt.TabIndex = 4;
+            this.loginListTxt.UseSelectable = true;
+            this.loginListTxt.WaterMark = "Login";
+            this.loginListTxt.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.loginListTxt.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // emailListTxt
+            // 
+            // 
+            // 
+            // 
+            this.emailListTxt.CustomButton.Image = null;
+            this.emailListTxt.CustomButton.Location = new System.Drawing.Point(131, 1);
+            this.emailListTxt.CustomButton.Name = "";
+            this.emailListTxt.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.emailListTxt.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.emailListTxt.CustomButton.TabIndex = 1;
+            this.emailListTxt.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.emailListTxt.CustomButton.UseSelectable = true;
+            this.emailListTxt.CustomButton.Visible = false;
+            this.emailListTxt.Lines = new string[0];
+            this.emailListTxt.Location = new System.Drawing.Point(241, 269);
+            this.emailListTxt.MaxLength = 32767;
+            this.emailListTxt.Name = "emailListTxt";
+            this.emailListTxt.PasswordChar = '\0';
+            this.emailListTxt.PromptText = "Email";
+            this.emailListTxt.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.emailListTxt.SelectedText = "";
+            this.emailListTxt.SelectionLength = 0;
+            this.emailListTxt.SelectionStart = 0;
+            this.emailListTxt.ShortcutsEnabled = true;
+            this.emailListTxt.Size = new System.Drawing.Size(153, 23);
+            this.emailListTxt.TabIndex = 5;
+            this.emailListTxt.UseSelectable = true;
+            this.emailListTxt.WaterMark = "Email";
+            this.emailListTxt.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.emailListTxt.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // isactiveListCheckBox
+            // 
+            this.isactiveListCheckBox.AutoSize = true;
+            this.isactiveListCheckBox.Location = new System.Drawing.Point(425, 182);
+            this.isactiveListCheckBox.Name = "isactiveListCheckBox";
+            this.isactiveListCheckBox.Size = new System.Drawing.Size(69, 15);
+            this.isactiveListCheckBox.TabIndex = 6;
+            this.isactiveListCheckBox.Text = "Aktywny";
+            this.isactiveListCheckBox.UseSelectable = true;
+            // 
+            // isadminListCheckBox
+            // 
+            this.isadminListCheckBox.AutoSize = true;
+            this.isadminListCheckBox.Location = new System.Drawing.Point(425, 211);
+            this.isadminListCheckBox.Name = "isadminListCheckBox";
+            this.isadminListCheckBox.Size = new System.Drawing.Size(96, 15);
+            this.isadminListCheckBox.TabIndex = 7;
+            this.isadminListCheckBox.Text = "Administrator";
+            this.isadminListCheckBox.UseSelectable = true;
+            // 
+            // resetPasswdListCheckBox
+            // 
+            this.resetPasswdListCheckBox.AutoSize = true;
+            this.resetPasswdListCheckBox.Location = new System.Drawing.Point(425, 240);
+            this.resetPasswdListCheckBox.Name = "resetPasswdListCheckBox";
+            this.resetPasswdListCheckBox.Size = new System.Drawing.Size(96, 15);
+            this.resetPasswdListCheckBox.TabIndex = 7;
+            this.resetPasswdListCheckBox.Text = "Zresetuj hasło";
+            this.resetPasswdListCheckBox.UseSelectable = true;
+            // 
+            // updateBtn
+            // 
+            this.updateBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.updateBtn.Location = new System.Drawing.Point(241, 312);
+            this.updateBtn.Name = "updateBtn";
+            this.updateBtn.Size = new System.Drawing.Size(280, 23);
+            this.updateBtn.TabIndex = 8;
+            this.updateBtn.Text = "Aktualizuj";
+            this.updateBtn.UseSelectable = true;
+            this.updateBtn.Click += new System.EventHandler(this.updateBtn_Click);
+            // 
+            // usersListBox
+            // 
+            this.usersListBox.FormattingEnabled = true;
+            this.usersListBox.ItemHeight = 17;
+            this.usersListBox.Location = new System.Drawing.Point(16, 182);
+            this.usersListBox.Name = "usersListBox";
+            this.usersListBox.Size = new System.Drawing.Size(207, 259);
+            this.usersListBox.TabIndex = 11;
+            this.usersListBox.SelectedIndexChanged += new System.EventHandler(this.usersListBox_SelectedIndexChanged);
+            // 
+            // idTxt
+            // 
+            // 
+            // 
+            // 
+            this.idTxt.CustomButton.Image = null;
+            this.idTxt.CustomButton.Location = new System.Drawing.Point(56, 1);
+            this.idTxt.CustomButton.Name = "";
+            this.idTxt.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.idTxt.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.idTxt.CustomButton.TabIndex = 1;
+            this.idTxt.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.idTxt.CustomButton.UseSelectable = true;
+            this.idTxt.CustomButton.Visible = false;
+            this.idTxt.Enabled = false;
+            this.idTxt.Lines = new string[0];
+            this.idTxt.Location = new System.Drawing.Point(451, 268);
+            this.idTxt.MaxLength = 32767;
+            this.idTxt.Name = "idTxt";
+            this.idTxt.PasswordChar = '\0';
+            this.idTxt.PromptText = "Id";
+            this.idTxt.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.idTxt.SelectedText = "";
+            this.idTxt.SelectionLength = 0;
+            this.idTxt.SelectionStart = 0;
+            this.idTxt.ShortcutsEnabled = true;
+            this.idTxt.Size = new System.Drawing.Size(78, 23);
+            this.idTxt.TabIndex = 5;
+            this.idTxt.UseSelectable = true;
+            this.idTxt.WaterMark = "Id";
+            this.idTxt.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.idTxt.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // userListLabel
+            // 
+            this.userListLabel.AutoSize = true;
+            this.userListLabel.Location = new System.Drawing.Point(16, 157);
+            this.userListLabel.Name = "userListLabel";
+            this.userListLabel.Size = new System.Drawing.Size(114, 19);
+            this.userListLabel.TabIndex = 12;
+            this.userListLabel.Text = "Lista pracowników";
+            // 
+            // idLabel
+            // 
+            this.idLabel.AutoSize = true;
+            this.idLabel.Location = new System.Drawing.Point(425, 270);
+            this.idLabel.Name = "idLabel";
+            this.idLabel.Size = new System.Drawing.Size(20, 19);
+            this.idLabel.TabIndex = 12;
+            this.idLabel.Text = "Id";
+            // 
             // AdministrationUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add(this.idLabel);
+            this.Controls.Add(this.userListLabel);
+            this.Controls.Add(this.usersListBox);
+            this.Controls.Add(this.resetPasswdListCheckBox);
+            this.Controls.Add(this.isadminListCheckBox);
             this.Controls.Add(this.isAdminCheckBox);
+            this.Controls.Add(this.isactiveListCheckBox);
             this.Controls.Add(this.isActiveCheckBox);
+            this.Controls.Add(this.idTxt);
+            this.Controls.Add(this.emailListTxt);
             this.Controls.Add(this.emailTxt);
+            this.Controls.Add(this.loginListTxt);
             this.Controls.Add(this.loginTxt);
+            this.Controls.Add(this.lastNameListTxt);
             this.Controls.Add(this.lastNameTxt);
+            this.Controls.Add(this.firstNameListTxt);
             this.Controls.Add(this.firstNameTxt);
             this.Controls.Add(this.addUserCheckBox);
+            this.Controls.Add(this.updateBtn);
             this.Controls.Add(this.addUserBtn);
             this.Controls.Add(this.administrationLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -262,5 +516,17 @@
         private MetroFramework.Controls.MetroTextBox emailTxt;
         private MetroFramework.Controls.MetroCheckBox isActiveCheckBox;
         private MetroFramework.Controls.MetroCheckBox isAdminCheckBox;
+        private MetroFramework.Controls.MetroTextBox firstNameListTxt;
+        private MetroFramework.Controls.MetroTextBox lastNameListTxt;
+        private MetroFramework.Controls.MetroTextBox loginListTxt;
+        private MetroFramework.Controls.MetroTextBox emailListTxt;
+        private MetroFramework.Controls.MetroCheckBox isactiveListCheckBox;
+        private MetroFramework.Controls.MetroCheckBox isadminListCheckBox;
+        private MetroFramework.Controls.MetroCheckBox resetPasswdListCheckBox;
+        private MetroFramework.Controls.MetroButton updateBtn;
+        private System.Windows.Forms.ListBox usersListBox;
+        private MetroFramework.Controls.MetroTextBox idTxt;
+        private MetroFramework.Controls.MetroLabel userListLabel;
+        private MetroFramework.Controls.MetroLabel idLabel;
     }
 }

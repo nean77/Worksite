@@ -15,13 +15,13 @@ namespace Worksite.UserControls.Helpers
 
         public static async Task<int> GetOpenServices()
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return await entityHelpers.GetUserOpenServices();
         }
         public static async Task<int> GetExpiredServices()
         {
-            ReadEntityHepers entityHelpers = new ReadEntityHepers();
+            ReadEntityHelpers entityHelpers = new ReadEntityHelpers();
 
             return await entityHelpers.GetUserExpiredServices();
         }
