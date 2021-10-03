@@ -97,6 +97,7 @@
             this.StatsTile.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
             this.StatsTile.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             this.StatsTile.UseSelectable = true;
+            this.StatsTile.Click += new System.EventHandler(this.StatsTile_Click);
             // 
             // DevicesTile
             // 

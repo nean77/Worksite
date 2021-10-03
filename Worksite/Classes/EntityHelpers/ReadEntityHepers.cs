@@ -56,6 +56,24 @@ namespace Worksite.Classes.EntityHelpers
                 return list;
             }
         }
+        public async Task<ICollection<ServiceOrder>> GetUserServices(long userId)
+        {
+            using (WorksiteEntities ctx = new WorksiteEntities())
+            {
+                await ctx.ServiceTypes.Select(x => x).ToListAsync();
+                await ctx.ServiceStatuses.Select(x => x).ToListAsync();
+                var list = await ctx.ServiceOrders.Select(x => x)
+                    .Where(x => x.UserId == userId)
+                    .Include(so => so.Customer)
+                    .Include(so => so.Device)
+                    .Include(so => so.User)
+                    .Include(so => so.ServiceOrders_ServiceStatuses)
+                    .Include(so => so.ServiceOrders_ServiceTypes)
+                    .ToListAsync();
+
+                return list;
+            }
+        }
         public async Task<ServiceOrder> GetServiceById(long Id)
         {
             using (WorksiteEntities ctx = new WorksiteEntities())
@@ -66,6 +84,9 @@ namespace Worksite.Classes.EntityHelpers
                 var order = await ctx.ServiceOrders
                         .Include(so => so.ServiceOrders_ServiceStatuses)
                         .Include(so => so.ServiceOrders_ServiceTypes)
+                        .Include(so => so.Customer)
+                        .Include(so => so.Device)
+                        .Include(so => so.User)
                         .FirstOrDefaultAsync(x => x.ServiceOrderId == Id);
 
                 return order;
@@ -124,18 +145,14 @@ namespace Worksite.Classes.EntityHelpers
         {
             using (WorksiteEntities ctx = new WorksiteEntities())
             {
-                int count = await ctx.AllExpiredServices.CountAsync(os => os.UserId == currentUser.UserId);
-
-                return count;
+                return await ctx.AllExpiredServices.CountAsync(os => os.UserId == currentUser.UserId);
             }
         }
         public async Task<int> GetUserOpenServices()
         {            
             using (WorksiteEntities ctx = new WorksiteEntities())
             {
-                int count = await ctx.AllOpenServices.CountAsync(os => os.UserId == currentUser.UserId);
-
-                return count;
+                return await ctx.AllOpenServices.CountAsync(os => os.UserId == currentUser.UserId);
             }
         }
         public async Task<bool> HasCustomerChanges(Customer customer)
@@ -188,6 +205,95 @@ namespace Worksite.Classes.EntityHelpers
                     .Sum(x => x.Hours); 
             }
         }
-        
+        public async Task<int> GetServicesCount()
+        {
+            using (WorksiteEntities ctx = new WorksiteEntities())
+            {
+                return await ctx.ServiceOrders.CountAsync();
+            }
+        }
+        public async Task<int> GetOpenServicesCount()
+        {
+            using (WorksiteEntities ctx = new WorksiteEntities())
+            {
+                return await ctx.AllOpenServices.CountAsync();
+            }
+        }
+        public async Task<int> GetExpiresServicesCount()
+        {
+            using (WorksiteEntities ctx = new WorksiteEntities())
+            {
+                return await ctx.AllExpiredServices.CountAsync();
+            }
+        }
+        public async Task<decimal> GetTotalServicesPrice()
+        {
+            decimal defaultServicesPrice, hoursSum, otherServicePrice = 0, result=0;
+            List<ServiceOrder> list = new List<ServiceOrder>();
+            using (WorksiteEntities ctx = new WorksiteEntities())
+            {
+                await ctx.ServiceTypes.Select(x => x).ToListAsync();
+                await ctx.ServiceStatuses.Select(x => x).ToListAsync();
+                list = await ctx.ServiceOrders.Select(x => x)
+                    .Include(so => so.Customer)
+                    .Include(so => so.Device)
+                    .Include(so => so.User)
+                    .Include(so => so.ServiceOrders_ServiceStatuses)
+                    .Include(so => so.ServiceOrders_ServiceTypes)
+                    .ToListAsync();
+
+                foreach (var l in list)
+                {
+                    defaultServicesPrice = l.ServiceOrders_ServiceTypes.Where(x => x.ServiceTypeId < 8).Sum(x => x.ServiceType.Price);
+                    hoursSum = (decimal)l.ServiceOrders_ServiceTypes.Where(x => x.ServiceTypeId == 8).Sum(x => x.Hours);
+                    try
+                    {
+                        otherServicePrice = l.ServiceOrders_ServiceTypes.Where(x => x.ServiceTypeId == 8).FirstOrDefault().ServiceType.Price * hoursSum;
+                    }
+                    catch (Exception)
+                    {
+                        otherServicePrice = 0;
+                    }
+                    result += Math.Round(defaultServicesPrice + otherServicePrice, 2);
+                }
+            }
+            return result;
+        }
+        public async Task<List<string[]>> GetUsersStats()
+        {
+            List<string[]> userStats = new List<string[]>();
+            var allUsersList = await GetAllEmployees();
+            foreach (var u in allUsersList)
+            {
+                using (WorksiteEntities ctx = new WorksiteEntities())
+                {
+                    string[] oneUserStats = new string[3];
+                    var userServicesCount = await ctx.ServiceOrders.CountAsync(x => x.UserId == u.UserId);
+                    var usersServicesList = await GetUserServices(u.UserId);
+                    decimal defaultServicesPrice, hoursSum, otherServicePrice = 0, result = 0;
+                    foreach (var l in usersServicesList)
+                    {
+                        defaultServicesPrice = l.ServiceOrders_ServiceTypes.Where(x => x.ServiceTypeId < 8).Sum(x => x.ServiceType.Price);
+                        hoursSum = (decimal)l.ServiceOrders_ServiceTypes.Where(x => x.ServiceTypeId == 8).Sum(x => x.Hours);
+                        try
+                        {
+                            otherServicePrice = l.ServiceOrders_ServiceTypes.Where(x => x.ServiceTypeId == 8).FirstOrDefault().ServiceType.Price * hoursSum;
+                        }
+                        catch (Exception)
+                        {
+                            otherServicePrice = 0;
+                        }
+                        result += Math.Round(defaultServicesPrice + otherServicePrice, 2);
+                    }
+
+                    oneUserStats[0] = u.LastName;
+                    oneUserStats[1] = userServicesCount.ToString();
+                    oneUserStats[2] = result.ToString();
+
+                    userStats.Add(oneUserStats);
+                }
+            }
+            return userStats;
+        }
     }
 }

@@ -87,6 +87,7 @@
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadCustomersEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadDevicesEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IReadEntityHelpers.cs" />
+    <Compile Include="Classes\EntityHelpers\Interfaces\IReadStatsEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IWriteAdministrationEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IWriteCustomersEntityHelpers.cs" />
     <Compile Include="Classes\EntityHelpers\Interfaces\IWriteDevicesEntityHelpers.cs" />
@@ -192,6 +193,13 @@
     <Compile Include="User.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Helpers\StatsControlHelpers.cs" />
+    <Compile Include="UserControls\StatsUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\StatsUserControl.Designer.cs">
+      <DependentUpon>StatsUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\AdministrationUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -258,6 +266,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\StatsUserControl.resx">
+      <DependentUpon>StatsUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\AdministrationUserControl.resx">
       <DependentUpon>AdministrationUserControl.cs</DependentUpon>
     </EmbeddedResource>

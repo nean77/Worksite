@@ -23,7 +23,9 @@ namespace Worksite.Forms
 
         private async void findBtn_Click(object sender, EventArgs e)
         {
-            var so = await ServicesControlHelpers.GetServiceById(Convert.ToInt64(serviceIdTxt.Text));
+            long servid;
+            Int64.TryParse(serviceIdTxt.Text, out servid);
+            var so = await ServicesControlHelpers.GetServiceById(servid);
 
             if (so == null)
             {

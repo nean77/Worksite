@@ -48,5 +48,10 @@ namespace Worksite.Forms
         {
             AdministrationControlHelpers.SetUpUserControl(metroPanelContainer, new AdministrationUserControl());
         }
+
+        private void StatsTile_Click(object sender, EventArgs e)
+        {
+            StatsControlHelpers.SetUpUserControl(metroPanelContainer, new StatsUserControl());
+        }
     }
 }
